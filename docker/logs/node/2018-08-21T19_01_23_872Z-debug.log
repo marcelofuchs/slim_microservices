@@ -1,0 +1,38 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/home/node/api/node_modules/.bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'production' ]
+2 info using npm@6.1.0
+3 info using node@v9.11.2
+4 verbose run-script [ 'preproduction', 'production', 'postproduction' ]
+5 info lifecycle @~preproduction: @
+6 info lifecycle @~production: @
+7 verbose lifecycle @~production: unsafe-perm in lifecycle true
+8 verbose lifecycle @~production: PATH: /home/node/api/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/home/node/api/node_modules/.bin:/usr/local/lib/node_modules/npm/node_modules/npm-lifecycle/node-gyp-bin:/home/node/api/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+9 verbose lifecycle @~production: CWD: /home/node/api
+10 silly lifecycle @~production: Args: [ '-c',
+10 silly lifecycle   'cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js' ]
+11 silly lifecycle @~production: Returned: code: 1  signal: null
+12 info lifecycle @~production: Failed to exec production script
+13 verbose stack Error: @ production: `cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js`
+13 verbose stack Exit status 1
+13 verbose stack     at EventEmitter.<anonymous> (/home/node/api/node_modules/npm/node_modules/npm-lifecycle/index.js:304:16)
+13 verbose stack     at EventEmitter.emit (events.js:180:13)
+13 verbose stack     at ChildProcess.<anonymous> (/home/node/api/node_modules/npm/node_modules/npm-lifecycle/lib/spawn.js:55:14)
+13 verbose stack     at ChildProcess.emit (events.js:180:13)
+13 verbose stack     at maybeClose (internal/child_process.js:936:16)
+13 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
+14 verbose pkgid @
+15 verbose cwd /home/node/api
+16 verbose Linux 4.15.0-32-generic
+17 verbose argv "/usr/local/bin/node" "/home/node/api/node_modules/.bin/npm" "run" "production"
+18 verbose node v9.11.2
+19 verbose npm  v6.1.0
+20 error code ELIFECYCLE
+21 error errno 1
+22 error @ production: `cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js`
+22 error Exit status 1
+23 error Failed at the @ production script.
+23 error This is probably not a problem with npm. There is likely additional logging output above.
+24 verbose exit [ 1, true ]

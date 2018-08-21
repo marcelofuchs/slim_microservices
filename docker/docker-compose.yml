@@ -1,0 +1,82 @@
+version: '3'
+services:
+    db_crm: 
+        container_name: db_crm
+        build: ./postgres
+        restart: always
+        volumes:
+            - ./postgres/data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: home_crm
+            POSTGRES_PASSWORD: home_crm
+            POSTGRES_DB: home_crm
+        ports:
+            - "5432:5432"
+#     node:
+#         container_name: node_rtn
+#         build: ./node
+# #        user: "${USER}:${GROUP}"
+#         working_dir: /home/node/api
+#         environment:
+#           - NODE_ENV=development
+#         volumes:
+#           - ../web/api:/home/node/api
+#           - ./logs/node:/root/.npm/_logs
+# #        expose:
+# #          - "8081"
+#         entrypoint: "tail -f /home/node/api/readme.md"
+    redis_crm: 
+        container_name: redis_crm
+#        user: "${USER}:${GROUP}"
+        build: ./redis
+        restart: always
+        volumes:
+            - ./redis/data:/data
+            - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+        ports:
+            - "6379:6379"
+    php_fpm:
+        container_name: php_fpm
+#        user: "${USER}:${GROUP}"
+        build: ./php-fpm
+        volumes:
+            - ../web/api:/var/www/html
+            - ./logs/node:/root/.npm/_logs
+#            - ./php-fpm/.composer/cache:/.composer/cache
+        ports:
+            - "9000:9000"
+        links:
+            - db
+            - redis
+    web_crm:
+        container_name: web_crm
+#        user: "${USER}:${GROUP}"
+        build: ./nginx
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./nginx/app.vhost:/etc/nginx/conf.d/app.vhost
+            #DESCOMENTAR CASO QUEIRA CUSTOMIZAR O OPCACHE DO PHP
+            #- ./php-fpm/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+            - ./logs/nginx:/var/log/nginx
+            - ../web/api:/var/www/html
+        ports:
+            - "8080:80"
+            - "443:443"
+        links:
+            - php-fpm
+    pgadmin:
+        container_name: pgadmin
+        build: ./pgadmin
+        environment:
+            DEFAULT_USER: db@madeiramadeira.com.br
+            DEFAULT_PASSWORD: madeira@1234
+#            MAIL_SERVER: localhost
+#            MAIL_PORT: 25
+#            MAIL_USE_SSL: False
+#            MAIL_USE_TLS: False
+#            MAIL_USERNAME: None
+#            MAIL_PASSWORD: None
+        ports:
+            - "5050:5050"
+        links:
+            - db
