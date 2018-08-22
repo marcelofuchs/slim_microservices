@@ -21,7 +21,7 @@ server {
 
     # PHP FPM configuration.
     location ~* \.php$ {
-        fastcgi_pass php_rtn:9000;
+        fastcgi_pass php_fpm:9000;
         fastcgi_index                   index.php;
         fastcgi_split_path_info         ^(.+\.php)(.*)$;
         include                         /etc/nginx/fastcgi_params;

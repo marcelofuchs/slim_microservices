@@ -33,21 +33,21 @@ class AuthController {
     * @return void
     */
    public function __invoke(Request $request, Response $response, $args) {
+       
+        /**
+         * JWT Key
+         */
+        $key = $this->container->get("secretkey");
 
-    /**
-     * JWT Key
-     */
-    $key = $this->container->get("secretkey");
+        $token = array(
+            "user" => "@fidelissauro",
+            "twitter" => "https://twitter.com/fidelissauro",
+            "github" => "https://github.com/msfidelis"
+        );
 
-    $token = array(
-        "user" => "@fidelissauro",
-        "twitter" => "https://twitter.com/fidelissauro",
-        "github" => "https://github.com/msfidelis"
-    );
+        $jwt = JWT::encode($token, $key);
 
-    $jwt = JWT::encode($token, $key);
-
-    return $response->withJson(["auth-jwt" => $jwt], 200)
-        ->withHeader('Content-type', 'application/json');   
+        return $response->withJson(["auth-jwt" => $jwt], 200)
+            ->withHeader('Content-type', 'application/json');   
    }
 }

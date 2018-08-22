@@ -1,7 +1,7 @@
 version: '3'
 services:
-    db_crm: 
-        container_name: db_crm
+    db: 
+        container_name: db
         build: ./postgres
         restart: always
         volumes:
@@ -25,8 +25,8 @@ services:
 # #        expose:
 # #          - "8081"
 #         entrypoint: "tail -f /home/node/api/readme.md"
-    redis_crm: 
-        container_name: redis_crm
+    redis: 
+        container_name: redis
 #        user: "${USER}:${GROUP}"
         build: ./redis
         restart: always
@@ -40,7 +40,7 @@ services:
 #        user: "${USER}:${GROUP}"
         build: ./php-fpm
         volumes:
-            - ../web/api:/var/www/html
+            - ../books_microservice:/var/www/html
             - ./logs/node:/root/.npm/_logs
 #            - ./php-fpm/.composer/cache:/.composer/cache
         ports:
@@ -58,12 +58,12 @@ services:
             #DESCOMENTAR CASO QUEIRA CUSTOMIZAR O OPCACHE DO PHP
             #- ./php-fpm/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
             - ./logs/nginx:/var/log/nginx
-            - ../web/api:/var/www/html
+            - ../books_microservice:/var/www/html
         ports:
             - "8080:80"
             - "443:443"
         links:
-            - php-fpm
+            - php_fpm
     pgadmin:
         container_name: pgadmin
         build: ./pgadmin

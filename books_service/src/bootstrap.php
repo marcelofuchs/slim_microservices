@@ -1,6 +1,6 @@
 <?php
 
-require './vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
@@ -83,15 +83,15 @@ $isDevMode = true;
 /**
  * Diretório de Entidades e Metadata do Doctrine
  */
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src/Models/Entity"), $isDevMode);
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/Models/Entity"), $isDevMode);
 
 /**
  * Array de configurações da nossa conexão com o banco
  */
-$conn = array(
+$conn = [
     'driver' => 'pdo_sqlite',
-    'path' => __DIR__ . '/db.sqlite',
-);
+    'path' => __DIR__ . '/../database/db.sqlite',
+];
 
 /**
  * Instância do Entity Manager
