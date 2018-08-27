@@ -16,8 +16,8 @@ install(){
     echo ""
     echo "================================================================="
     echo "==================== BUILDING DOCKERS ==========================="
-    # docker-compose -f docker/docker-compose.yml build
-    docker-compose -f docker/docker-compose.yml up -d
+    # docker-compose -f docker-compose.yml build
+    docker-compose -f docker-compose.yml up -d
 
     echo ""
     echo "================================================================="
@@ -50,15 +50,15 @@ install(){
 }
 
 build(){
-    docker-compose -f docker/docker-compose.yml $@
+    docker-compose -f docker-compose.yml $@
 }
 
 up(){
-    docker-compose -f docker/docker-compose.yml $@
+    docker-compose -f docker-compose.yml $@
 }
 
 down(){
-    docker-compose -f docker/docker-compose.yml $@
+    docker-compose -f docker-compose.yml $@
 }
 
 case $1 in
@@ -94,6 +94,6 @@ case $1 in
 		break
 		;;
 	*)
-		docker-compose -f docker/docker-compose.yml $@
+		docker-compose -f docker-compose.yml $@
 		;;
 esac

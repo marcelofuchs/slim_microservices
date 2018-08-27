@@ -42,14 +42,11 @@ RUN mkdir /.composer && mkdir /.composer/cache && chmod 777 -R /.composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN composer --version
 
-# install git
+# install git - TO INSTALL COMPOSER REPOSITORYES
 RUN apt-get install -y git
 
 RUN apt-get update -y
 RUN apt-get install -my wget gnupg build-essential curl
-# RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
-# RUN apt-get install -y nodejs npm yarn
-# RUN npm i -g npm
 
 EXPOSE 9000
 CMD ["php-fpm"]

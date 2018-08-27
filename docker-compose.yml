@@ -2,10 +2,10 @@ version: '3'
 services:
     db: 
         container_name: db
-        build: ./postgres
+        build: ./environment/postgres
         restart: always
         volumes:
-            - ./postgres/data:/var/lib/postgresql/data
+            - ./environment/postgres/data:/var/lib/postgresql/data
         environment:
             POSTGRES_USER: home_crm
             POSTGRES_PASSWORD: home_crm
@@ -28,21 +28,21 @@ services:
     redis: 
         container_name: redis
 #        user: "${USER}:${GROUP}"
-        build: ./redis
+        build: ./environment/redis
         restart: always
         volumes:
-            - ./redis/data:/data
-            - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+            - ./environment/redis/data:/data
+            - ./environment/redis/redis.conf:/usr/local/etc/redis/redis.conf
         ports:
             - "6379:6379"
     php_fpm:
         container_name: php_fpm
 #        user: "${USER}:${GROUP}"
-        build: ./php-fpm
+        build: ./environment/php-fpm
         volumes:
             - ../books_microservice:/var/www/html
-            - ./logs/node:/root/.npm/_logs
-#            - ./php-fpm/.composer/cache:/.composer/cache
+            - ./environment/logs/node:/root/.npm/_logs
+#            - ./environment/php-fpm/.composer/cache:/.composer/cache
         ports:
             - "9000:9000"
         links:
@@ -51,13 +51,13 @@ services:
     web_crm:
         container_name: web_crm
 #        user: "${USER}:${GROUP}"
-        build: ./nginx
+        build: ./environment/nginx
         volumes:
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-            - ./nginx/app.vhost:/etc/nginx/conf.d/app.vhost
+            - ./environment/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./environment/nginx/app.vhost:/etc/nginx/conf.d/app.vhost
             #DESCOMENTAR CASO QUEIRA CUSTOMIZAR O OPCACHE DO PHP
             #- ./php-fpm/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
-            - ./logs/nginx:/var/log/nginx
+            - ./environment/logs/nginx:/var/log/nginx
             - ../books_microservice:/var/www/html
         ports:
             - "8080:80"
@@ -66,7 +66,7 @@ services:
             - php_fpm
     pgadmin:
         container_name: pgadmin
-        build: ./pgadmin
+        build: ./environment/pgadmin
         environment:
             DEFAULT_USER: db@madeiramadeira.com.br
             DEFAULT_PASSWORD: madeira@1234
