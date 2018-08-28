@@ -19,5 +19,11 @@ $app->group('/v1', function() {
         $this->put('/{id:[0-9]+}', '\App\v1\Controllers\BookController:updateBook');
         $this->delete('/{id:[0-9]+}', '\App\v1\Controllers\BookController:deleteBook');
     });
-    
+
+    /**
+     * Dentro de v1, o recurso /auth
+     */
+    $this->group('/auth', function() {
+        $this->get('', \App\v1\Controllers\AuthController::class);
+    });
 });
