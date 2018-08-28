@@ -25,7 +25,6 @@ $configs = [
  */
 $container = new \Slim\Container($configs);
 
-
 /**
  * Converte os Exceptions Genéricas dentro da Aplicação em respostas JSON
  */
@@ -39,7 +38,7 @@ $container['errorHandler'] = function ($container) {
 };
 
 /**
- * Converte os Exceptions de Erros 405 - Not Allowed
+ * Convertdde os Exceptions de Erros 405 - Not Allowed
  */
 $container['notAllowedHandler'] = function ($container) {
     return function ($request, $response, $methods) use ($container) {
@@ -78,11 +77,11 @@ $container['logger'] = function($container) {
     return $logger;
 };
 
-$isDevMode = true;
 
 /**
  * Diretório de Entidades e Metadata do Doctrine
  */
+$isDevMode = true;
 $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/Models/Entity"), $isDevMode);
 
 /**
@@ -108,6 +107,10 @@ $container['em'] = $entityManager;
  * Token do nosso JWT
  */
 $container['secretkey'] = "secretloko";
+
+$injections = require_once (__DIR__.'/../../../Domain/Contracts/injections.php') ;
+
+print_r($container);exit;
 
 /**
  * Application Instance
