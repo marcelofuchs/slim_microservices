@@ -11,11 +11,6 @@ abstract class AbstractDomainService
         $this->repository = $repositoryContract;
     }
 
-    public function getProximaPericia($companyId)
-    {
-        return $this->repository->getProximaPericia($companyId);
-    }
-
     public function batchCreate($arrayRecords)
     {
         foreach ($arrayRecords as $data){
