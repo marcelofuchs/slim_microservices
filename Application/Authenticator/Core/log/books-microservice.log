@@ -1,3 +1,0 @@
-[2018-08-22 08:57:01] books-microservice.WARNING: Book 1 Not Found [] []
-[2018-08-22 08:57:46] books-microservice.INFO: Book Created! {"id":null,"name":"Quem comeu o meu queijo.","author":"Marcelo"} []
-[2018-08-22 08:57:56] books-microservice.INFO: Book Created! {"id":null,"name":"Quem comeu o meu queijo.","author":"Marcelo"} []

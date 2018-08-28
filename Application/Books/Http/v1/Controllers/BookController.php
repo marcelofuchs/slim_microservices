@@ -1,5 +1,5 @@
 <?php
-namespace App\v1\Controllers;
+namespace Application\Books\Http\v1\Controllers;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
