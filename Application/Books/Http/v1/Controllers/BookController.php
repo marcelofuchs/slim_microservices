@@ -4,7 +4,8 @@ namespace Application\Books\Http\v1\Controllers;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-use App\Models\Entity\Book;
+use Domain\Entities\Book;
+
 
 /**
  * Controller v1 de livros
@@ -34,7 +35,7 @@ class BookController {
      */
     public function listBook($request, $response, $args) {
         $entityManager = $this->container->get('em');
-        $booksRepository = $entityManager->getRepository('App\Models\Entity\Book');
+        $booksRepository = $entityManager->getRepository('Domain\Entities\Book');
         $books = $booksRepository->findAll();
         $return = $response->withJson($books, 200)
             ->withHeader('Content-type', 'application/json');
@@ -88,7 +89,7 @@ class BookController {
         $id = (int) $args['id'];
 
         $entityManager = $this->container->get('em');
-        $booksRepository = $entityManager->getRepository('App\Models\Entity\Book');
+        $booksRepository = $entityManager->getRepository('Domain\Entities\Book');
         $book = $booksRepository->find($id); 
 
         /**
@@ -120,7 +121,7 @@ class BookController {
          * Encontra o Livro no Banco
          */ 
         $entityManager = $this->container->get('em');
-        $booksRepository = $entityManager->getRepository('App\Models\Entity\Book');
+        $booksRepository = $entityManager->getRepository('Domain\Entities\Book');
         $book = $booksRepository->find($id);   
 
         /**

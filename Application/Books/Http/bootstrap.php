@@ -9,21 +9,37 @@ use Monolog\Logger;
 use Firebase\JWT\JWT;
 
 /**
- * Configurações
- */
-$configs = [
-    'settings' => [
-        'displayErrorDetails' => true,
-    ]   
-];
-
-/**
  * Container Resources do Slim.
  * Aqui dentro dele vamos carregar todas as dependências
  * da nossa aplicação que vão ser consumidas durante a execução
  * da nossa API
  */
-$container = new \Slim\Container($configs);
+$container = new \Slim\Container(require_once __DIR__.'/../config/settings.php');
+
+$container[EntityManager::class] = function (Container $container): EntityManager {
+    $config = Setup::createAnnotationMetadataConfiguration(
+        $container['settings']['doctrine']['metadata_dirs'],
+        $container['settings']['doctrine']['dev_mode']
+    );
+
+    $config->setMetadataDriverImpl(
+        new AnnotationDriver(
+            new AnnotationReader,
+            $container['settings']['doctrine']['metadata_dirs']
+        )
+    );
+
+    $config->setMetadataCacheImpl(
+        new FilesystemCache(
+            $container['settings']['doctrine']['cache_dir']
+        )
+    );
+
+    return EntityManager::create(
+        $container['settings']['doctrine']['connection'],
+        $config
+    );
+};
 
 
 /**
@@ -83,26 +99,26 @@ $isDevMode = true;
 /**
  * Diretório de Entidades e Metadata do Doctrine
  */
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/Models/Entity"), $isDevMode);
+//$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__.'/../../../Domain/Models/Entity'), $isDevMode);
 
 /**
  * Array de configurações da nossa conexão com o banco
  */
-$conn = [
-    'driver' => 'pdo_sqlite',
-    'path' => __DIR__ . '/../database/db.sqlite',
-];
+//$conn = [
+//    'driver' => 'pdo_sqlite',
+//    'path' => __DIR__ . '/../database/db.sqlite',
+//];
 
 /**
  * Instância do Entity Manager
  */
-$entityManager = EntityManager::create($conn, $config);
+//$entityManager = EntityManager::create($conn, $config);
 
 
 /**
  * Coloca o Entity manager dentro do container com o nome de em (Entity Manager)
  */
-$container['em'] = $entityManager;
+//$container['em'] = $entityManager;
 
 /**
  * Token do nosso JWT

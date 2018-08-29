@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b004e1919cefd68ca8910028ac7b5c6f",
+    "content-hash": "cddb17d0d6909c2b2509fac001c640db",
     "packages": [
         {
             "name": "akrabat/rka-scheme-and-host-detection-middleware",

@@ -224,3 +224,5 @@ Stack trace:
 #4 /var/www/html/public/index.php(41): {closure}()
 #5 {main}
   thrown in /var/www/html/vendor/zendframework/zend-diactoros/src/Response/SapiEmitterTrait.php on line 37" while reading upstream, client: 172.21.0.1, server: localhost, request: "GET /dev/info HTTP/1.1", upstream: "fastcgi://172.21.0.5:9000", host: "localhost:8080"
+2018/08/29 13:13:30 [error] 8#0: *2 FastCGI sent in stderr: "PHP message: PHP Warning:  require(/var/www/html): failed to open stream: Success in /var/www/html/Application/Books/config/settings.php on line 3
+PHP message: PHP Fatal error:  require(): Failed opening required '/var/www/html/Application/Books/config/../../../' (include_path='.:/usr/local/lib/php') in /var/www/html/Application/Books/config/settings.php on line 3" while reading response header from upstream, client: 172.19.0.1, server: localhost, request: "GET /v1/book HTTP/1.1", upstream: "fastcgi://172.19.0.5:9000", host: "localhost:8081"

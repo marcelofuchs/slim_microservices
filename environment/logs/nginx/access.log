@@ -66,3 +66,5 @@
 172.21.0.1 - - [22/Aug/2018:18:04:44 +0000] "GET /docs HTTP/1.1" 200 218 "-" "PostmanRuntime/7.2.0"
 172.21.0.1 - - [22/Aug/2018:18:32:45 +0000] "GET /dev/info HTTP/1.1" 200 26672 "-" "PostmanRuntime/7.2.0"
 172.21.0.1 - - [22/Aug/2018:18:33:10 +0000] "GET /docs HTTP/1.1" 200 218 "-" "PostmanRuntime/7.2.0"
+172.19.0.1 - - [29/Aug/2018:13:13:12 +0000] "GET /v1/auth HTTP/1.1" 200 178 "-" "PostmanRuntime/7.2.0"
+172.19.0.1 - - [29/Aug/2018:13:13:30 +0000] "GET /v1/book HTTP/1.1" 200 224 "-" "PostmanRuntime/7.2.0"

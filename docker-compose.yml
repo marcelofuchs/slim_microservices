@@ -1,5 +1,6 @@
 version: '3'
 services:
+
     db: 
         container_name: db
         build: ./environment/postgres
@@ -12,6 +13,7 @@ services:
             POSTGRES_DB: home_crm
         ports:
             - "5432:5432"
+
 #     node:
 #         container_name: node_rtn
 #         build: ./node
@@ -25,6 +27,7 @@ services:
 # #        expose:
 # #          - "8081"
 #         entrypoint: "tail -f /home/node/api/readme.md"
+
     redis: 
         container_name: redis
 #        user: "${USER}:${GROUP}"
@@ -35,12 +38,13 @@ services:
             - ./environment/redis/redis.conf:/usr/local/etc/redis/redis.conf
         ports:
             - "6379:6379"
+
     php_fpm:
         container_name: php_fpm
 #        user: "${USER}:${GROUP}"
         build: ./environment/php-fpm
         volumes:
-            - ../books_microservice:/var/www/html
+            - ./:/var/www/html
             - ./environment/logs/node:/root/.npm/_logs
 #            - ./environment/php-fpm/.composer/cache:/.composer/cache
         ports:
@@ -48,22 +52,41 @@ services:
         links:
             - db
             - redis
-    web_crm:
-        container_name: web_crm
+
+    web_crm_auth:
+        container_name: web_crm_auth
 #        user: "${USER}:${GROUP}"
         build: ./environment/nginx
         volumes:
             - ./environment/nginx/nginx.conf:/etc/nginx/nginx.conf
-            - ./environment/nginx/app.vhost:/etc/nginx/conf.d/app.vhost
+            - ./environment/nginx/app.auth.vhost:/etc/nginx/conf.d/app.vhost
             #DESCOMENTAR CASO QUEIRA CUSTOMIZAR O OPCACHE DO PHP
             #- ./php-fpm/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
             - ./environment/logs/nginx:/var/log/nginx
-            - ../books_microservice:/var/www/html
+            - ../:/var/www/html
         ports:
             - "8080:80"
-            - "443:443"
+            - "4430:443"
         links:
             - php_fpm
+
+    web_crm_books:
+        container_name: web_crm_books
+#        user: "${USER}:${GROUP}"
+        build: ./environment/nginx
+        volumes:
+            - ./environment/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - ./environment/nginx/app.books.vhost:/etc/nginx/conf.d/app.vhost
+            #DESCOMENTAR CASO QUEIRA CUSTOMIZAR O OPCACHE DO PHP
+            #- ./php-fpm/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
+            - ./environment/logs/nginx:/var/log/nginx
+            - ../:/var/www/html
+        ports:
+            - "8081:80"
+            - "4431:443"
+        links:
+            - php_fpm
+
     pgadmin:
         container_name: pgadmin
         build: ./environment/pgadmin
