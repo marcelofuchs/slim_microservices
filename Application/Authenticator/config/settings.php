@@ -1,12 +1,11 @@
 <?php
 
-$defaultSettings = require __DIR__.'/../../../';
 return [
     'settings' => [
         'displayErrorDetails' => true,
         'determineRouteBeforeAppMiddleware' => false,
 
-        'mm_crm_postgre' => [
+        'mm_crm' => [
             // if true, metadata caching is forcefully disabled
             'dev_mode' => true,
 
@@ -19,11 +18,11 @@ return [
             
             'connection' => [
                 'driver' => 'pdo_mysql',
-                'host' => 'localhost',
-                'port' => 3306,
-                'dbname' => 'mydb',
-                'user' => 'user',
-                'password' => 'secret',
+                'host' => getenv('DATABASE_HOST'),
+                'port' => getenv('DATABASE_PORT'),
+                'user' => getenv('DATABASE_USER'),
+                'password' => getenv('DATABASE_PASSWORD'),
+                'dbname' => getenv('DATABASE_NAME'),
                 'charset' => 'utf-8'
             ]
         ]

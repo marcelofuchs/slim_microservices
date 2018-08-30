@@ -2,11 +2,21 @@
 
 require __DIR__.'/../../../vendor/autoload.php';
 
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager;
 use Psr7Middlewares\Middleware\TrailingSlash;
 use Monolog\Logger;
 use Firebase\JWT\JWT;
+use Slim\Container;
+use Dotenv\Dotenv;
+
+/**
+ * Load environment
+ */
+//FROM DEFAULT
+$baseEnv = new Dotenv(__DIR__.'/../../../');
+$baseEnv->load();
+//Overload
+$overEnv = new Dotenv(__DIR__.'/../');
+$overEnv->overload();
 
 /**
  * Container Resources do Slim.
@@ -14,33 +24,16 @@ use Firebase\JWT\JWT;
  * da nossa aplicação que vão ser consumidas durante a execução
  * da nossa API
  */
-$container = new \Slim\Container(require_once __DIR__.'/../config/settings.php');
+$container = new Container(require_once __DIR__.'/../config/settings.php');
 
-$container[EntityManager::class] = function (Container $container): EntityManager {
-    $config = Setup::createAnnotationMetadataConfiguration(
-        $container['settings']['doctrine']['metadata_dirs'],
-        $container['settings']['doctrine']['dev_mode']
-    );
+//Injections
+require_once (__DIR__.'/../../../Domain/Contracts/injections.php') ;
 
-    $config->setMetadataDriverImpl(
-        new AnnotationDriver(
-            new AnnotationReader,
-            $container['settings']['doctrine']['metadata_dirs']
-        )
-    );
-
-    $config->setMetadataCacheImpl(
-        new FilesystemCache(
-            $container['settings']['doctrine']['cache_dir']
-        )
-    );
-
-    return EntityManager::create(
-        $container['settings']['doctrine']['connection'],
-        $config
-    );
+// DATABASE DEFAULT PRELOAD
+$container['em'] = function (Container $container) {
+    $manager = $container->get(\Domain\Contracts\Persistence\EntityManagerContract::class);
+    return $manager::create( $container['settings']['mm_crm'] );
 };
-
 
 /**
  * Converte os Exceptions Genéricas dentro da Aplicação em respostas JSON
@@ -94,32 +87,6 @@ $container['logger'] = function($container) {
     return $logger;
 };
 
-$isDevMode = true;
-
-/**
- * Diretório de Entidades e Metadata do Doctrine
- */
-//$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__.'/../../../Domain/Models/Entity'), $isDevMode);
-
-/**
- * Array de configurações da nossa conexão com o banco
- */
-//$conn = [
-//    'driver' => 'pdo_sqlite',
-//    'path' => __DIR__ . '/../database/db.sqlite',
-//];
-
-/**
- * Instância do Entity Manager
- */
-//$entityManager = EntityManager::create($conn, $config);
-
-
-/**
- * Coloca o Entity manager dentro do container com o nome de em (Entity Manager)
- */
-//$container['em'] = $entityManager;
-
 /**
  * Token do nosso JWT
  */
@@ -158,7 +125,6 @@ $app->add(new \Slim\Middleware\HttpBasicAuthentication([
     //"passthrough" => ["/auth/liberada", "/admin/ping"],
 ]));
 
-
 /**
  * Auth básica do JWT
  * Whitelist - Bloqueia tudo, e só libera os
@@ -178,4 +144,3 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
  */
 $trustedProxies = ['0.0.0.0', '127.0.0.1'];
 $app->add(new RKA\Middleware\SchemeAndHost($trustedProxies));
-
