@@ -12,6 +12,11 @@ npm (){
     docker exec -it node_rtn sh -c "$1 $2 $3 $4 $5 $6 $7 $8 $9"
 }
 
+doctrine (){
+    echo "php ./bin/$1 $2 $3 $4 $5 $6 $7 $8 $9;"
+    docker exec --user 1000  -it php_fpm bash -c "php ./bin/$1 $2 $3 $4 $5 $6 $7 $8 $9;"
+}
+
 install(){
     echo ""
     echo "================================================================="
@@ -69,6 +74,10 @@ case $1 in
 	composer)
 		echo "Composer..."
 		composer $@
+		;;
+	doctrine)
+		echo "Doctrine..."
+		doctrine $@
 		;;
 	# npm)
 	# 	echo "Npm ...."

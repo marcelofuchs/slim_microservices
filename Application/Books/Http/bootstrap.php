@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../../../vendor/autoload.php';
+require __DIR__ . '/../../../vendor/autoload.php';
 
 use Psr7Middlewares\Middleware\TrailingSlash;
 use Monolog\Logger;
@@ -12,10 +12,10 @@ use Dotenv\Dotenv;
  * Load environment
  */
 //FROM DEFAULT
-$baseEnv = new Dotenv(__DIR__.'/../../../');
+$baseEnv = new Dotenv(__DIR__ . '/../../../');
 $baseEnv->load();
 //Overload
-$overEnv = new Dotenv(__DIR__.'/../');
+$overEnv = new Dotenv(__DIR__ . '/../');
 $overEnv->overload();
 
 /**
@@ -24,15 +24,15 @@ $overEnv->overload();
  * da nossa aplicação que vão ser consumidas durante a execução
  * da nossa API
  */
-$container = new Container(require_once __DIR__.'/../config/settings.php');
+$container = new Container(require_once __DIR__ . '/../config/settings.php');
 
 //Injections
-require_once (__DIR__.'/../../../Domain/Contracts/injections.php') ;
+require_once (__DIR__ . '/../../../Domain/Contracts/injections.php');
 
 // DATABASE DEFAULT PRELOAD
 $container['em'] = function (Container $container) {
     $manager = $container->get(\Domain\Contracts\Persistence\EntityManagerContract::class);
-    return $manager::create( $container['settings']['mm_crm'] );
+    return $manager::create($container['settings']['mm_crm']);
 };
 
 /**
@@ -42,8 +42,8 @@ $container['errorHandler'] = function ($container) {
     return function ($request, $response, $exception) use ($container) {
         $statusCode = $exception->getCode() ? $exception->getCode() : 500;
         return $container['response']->withStatus($statusCode)
-            ->withHeader('Content-Type', 'Application/json')
-            ->withJson(["message" => $exception->getMessage()], $statusCode);
+                        ->withHeader('Content-Type', 'Application/json')
+                        ->withJson(["message" => $exception->getMessage()], $statusCode);
     };
 };
 
@@ -53,11 +53,11 @@ $container['errorHandler'] = function ($container) {
 $container['notAllowedHandler'] = function ($container) {
     return function ($request, $response, $methods) use ($container) {
         return $container['response']
-            ->withStatus(405)
-            ->withHeader('Allow', implode(', ', $methods))
-            ->withHeader('Content-Type', 'Application/json')
-            ->withHeader("Access-Control-Allow-Methods", implode(",", $methods))
-            ->withJson(["message" => "Method not Allowed; Method must be one of: " . implode(', ', $methods)], 405);
+                        ->withStatus(405)
+                        ->withHeader('Allow', implode(', ', $methods))
+                        ->withHeader('Content-Type', 'Application/json')
+                        ->withHeader("Access-Control-Allow-Methods", implode(",", $methods))
+                        ->withJson(["message" => "Method not Allowed; Method must be one of: " . implode(', ', $methods)], 405);
     };
 };
 
@@ -67,9 +67,9 @@ $container['notAllowedHandler'] = function ($container) {
 $container['notFoundHandler'] = function ($container) {
     return function ($request, $response) use ($container) {
         return $container['response']
-            ->withStatus(404)
-            ->withHeader('Content-Type', 'Application/json')
-            ->withJson(['message' => 'Page not found']);
+                        ->withStatus(404)
+                        ->withHeader('Content-Type', 'Application/json')
+                        ->withJson(['message' => 'Page not found']);
     };
 };
 
@@ -81,9 +81,9 @@ $container['logger'] = function($container) {
     $logfile = __DIR__ . '/log/books-microservice.log';
     $stream = new Monolog\Handler\StreamHandler($logfile, Monolog\Logger::DEBUG);
     $fingersCrossed = new Monolog\Handler\FingersCrossedHandler(
-        $stream, Monolog\Logger::INFO);
+            $stream, Monolog\Logger::INFO);
     $logger->pushHandler($fingersCrossed);
-    
+
     return $logger;
 };
 
@@ -118,11 +118,10 @@ $app->add(new \Slim\Middleware\HttpBasicAuthentication([
      * Blacklist - Deixa todas liberadas e só protege as dentro do array
      */
     "path" => ["/auth"],
-
-    /**
-     * Whitelist - Protege todas as rotas e só libera as de dentro do array
-     */
-    //"passthrough" => ["/auth/liberada", "/admin/ping"],
+        /**
+         * Whitelist - Protege todas as rotas e só libera as de dentro do array
+         */
+        //"passthrough" => ["/auth/liberada", "/admin/ping"],
 ]));
 
 /**

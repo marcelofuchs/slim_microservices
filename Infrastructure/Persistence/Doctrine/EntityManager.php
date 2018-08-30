@@ -18,11 +18,12 @@ class EntityManager implements \Domain\Contracts\Persistence\EntityManagerContra
     /**
      * @inheritdoc
      */
-    public static function create($settings = []) {
-        $config = Setup::createAnnotationMetadataConfiguration(
+    public static function create($settings = []) {       
+        
+        $config = Setup::createYAMLMetadataConfiguration(
             $settings['metadata_dirs'], $settings['dev_mode']
         );
-
+        
         $config->setMetadataDriverImpl(
             new AnnotationDriver(
                 new AnnotationReader, $settings['metadata_dirs']

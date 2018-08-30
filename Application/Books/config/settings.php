@@ -1,30 +1,9 @@
 <?php
 
-return [
-    'settings' => [
-        'displayErrorDetails' => true,
-        'determineRouteBeforeAppMiddleware' => false,
+//Caso tenha configurações especificas para a applicacao, criar merge aqui.
+$sets = require_once __DIR__.'/../../../config/settings.global.php';
 
-        'mm_crm' => [
-            // if true, metadata caching is forcefully disabled
-            'dev_mode' => true,
+$sets['settings']['mm_crm']['cache_dir'] = __DIR__ . '/../../../'. getenv('DOCTRINE_CACHE_DIR');
+$sets['settings']['mm_crm']['metadata_dirs'] = [__DIR__ . '/../../../'. getenv('DOCTRINE_METADATA_DIR')];
 
-            // path where the compiled metadata info will be cached
-            // make sure the path exists and it is writable
-            'cache_dir' => __DIR__ . '/../../../data/cache/doctrine',
-
-            // you should add any other path containing annotated entity classes
-            'metadata_dirs' => [__DIR__ . '/src/Domain'],
-            
-            'connection' => [
-                'driver' => 'pdo_mysql',
-                'host' => getenv('DATABASE_HOST'),
-                'port' => getenv('DATABASE_PORT'),
-                'user' => getenv('DATABASE_USER'),
-                'password' => getenv('DATABASE_PASSWORD'),
-                'dbname' => getenv('DATABASE_NAME'),
-                'charset' => 'utf-8'
-            ]
-        ]
-    ]
-];
+return $sets;
