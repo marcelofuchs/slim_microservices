@@ -24,9 +24,14 @@ class EntityManager implements \Domain\Contracts\Persistence\EntityManagerContra
             $settings['metadata_dirs'], $settings['dev_mode']
         );
         
+//        $config->setMetadataDriverImpl(
+//            new AnnotationDriver(
+//                new AnnotationReader, $settings['metadata_dirs']
+//            )
+//        );
         $config->setMetadataDriverImpl(
-            new AnnotationDriver(
-                new AnnotationReader, $settings['metadata_dirs']
+            new \Doctrine\ORM\Mapping\Driver\YamlDriver(
+                 $settings['metadata_dirs']
             )
         );
 
@@ -36,6 +41,10 @@ class EntityManager implements \Domain\Contracts\Persistence\EntityManagerContra
             )
         );
 
+        $config->setNamingStrategy(new \Doctrine\ORM\Mapping\UnderscoreNamingStrategy);
+        $config->setQueryCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
+        $config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
+        
         return DoctrineManager::create(
             $settings['connection'], $config
         );

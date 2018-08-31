@@ -34,8 +34,13 @@ class BookController {
      * @return Response
      */
     public function listBook($request, $response, $args) {
+        
         $entityManager = $this->container->get('em');
         $booksRepository = $entityManager->getRepository('Domain\Entities\Book');
+        print_r('dssdf');
+        print_r($booksRepository);
+        exit;
+        
         $books = $booksRepository->findAll();
         $return = $response->withJson($books, 200)
             ->withHeader('Content-type', 'application/json');

@@ -8,7 +8,10 @@ Cada aplicação deve ser totalmente independente, ao subir uma aplicação de B
 
 ## Dicas
  
-- Gerar arquivo Yaml a partir do banco de dados
-'''
-./micro.sh doctrine orm:convert-mapping --from-database yaml ./Infrastructure/Persistence/Doctrine/Mappings --namespace=Domain\\\\Entities\\\\
-'''
+- Gerar arquivo Yaml a partir do banco de dados. use * --filter=book --force * caso queira apenas uma tabela.
+
+
+```
+# ./micro.sh doctrine orm:convert-mapping --from-database yaml ./Infrastructure/Persistence/Doctrine/Mappings --namespace=Domain\\\\Entities\\\\
+
+```
