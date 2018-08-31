@@ -8,7 +8,7 @@ Cada aplicação deve ser totalmente independente, ao subir uma aplicação de B
 
 ## Dicas
 
-É possivel executar comandos comuns através do script 'micro.sh'. O script vai acessar o bash de um determinado docker, evitando instalalção de PHP/Banco de dados/Composer localmente.
+É possivel executar comandos comuns através do script 'micro.sh'. O script vai acessar o bash de um determinado docker, evitando instalação de PHP/Banco de dados/Composer no sistema hospedeiro.
 
 - Iniciar e preparar Dockers.
 
@@ -23,6 +23,7 @@ Cada aplicação deve ser totalmente independente, ao subir uma aplicação de B
 # ./micro.sh install
 
 ```
+
 - Iniciar sistema.
 
 ```
@@ -44,7 +45,7 @@ Cada aplicação deve ser totalmente independente, ao subir uma aplicação de B
 
 ```
 
-- Para executar voltados ao docker.
+- Para executar comandos relacionados ao docker.
 
 ```
 # ./micro.sh
