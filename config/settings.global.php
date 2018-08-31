@@ -17,13 +17,16 @@ return [
             'metadata_dirs' => [__DIR__ . '/../'. getenv('DOCTRINE_METADATA_DIR')],
             
             'connection' => [
-                'driver' => 'pdo_mysql',
+                'driver' => getenv('DATABASE_DRIVER'),
                 'host' => getenv('DATABASE_HOST'),
                 'port' => getenv('DATABASE_PORT'),
                 'user' => getenv('DATABASE_USER'),
                 'password' => getenv('DATABASE_PASSWORD'),
                 'dbname' => getenv('DATABASE_NAME'),
-                'charset' => 'utf-8'
+                'charset' => 'utf8',
+                'driverOptions' => [
+                    1002 => "SET NAMES 'UTF8'"
+                ],
             ]
         ]
     ]

@@ -5,7 +5,6 @@ namespace Domain\Entities;
 /**
  * Book Entity
  * 
- * @Entity @Table(name="books")
  * */
 class Book {
 
