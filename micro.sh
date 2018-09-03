@@ -67,10 +67,10 @@ down(){
 }
 
 case $1 in
-	artisan)
-		echo "Artisan..."
-		artisan $@
-		;;
+	# artisan)
+	#	echo "Artisan..."
+	#	artisan $@
+	#	;;
 	composer)
 		echo "Composer..."
 		composer $@

@@ -14,12 +14,14 @@ use Dotenv\Dotenv;
 //FROM DEFAULT
 $baseEnv = new Dotenv(__DIR__ . '/../../../');
 $baseEnv->load();
+
 //Overload
 $overEnv = new Dotenv(__DIR__ . '/../');
 $overEnv->overload();
 
 /**
  * Container Resources do Slim.
+ * 
  * Aqui dentro dele vamos carregar todas as dependências
  * da nossa aplicação que vão ser consumidas durante a execução
  * da nossa API
@@ -38,14 +40,14 @@ $container['em'] = function (Container $container) {
 /**
  * Converte os Exceptions Genéricas dentro da Aplicação em respostas JSON
  */
-$container['errorHandler'] = function ($container) {
-    return function ($request, $response, $exception) use ($container) {
-        $statusCode = $exception->getCode() ? $exception->getCode() : 500;
-        return $container['response']->withStatus($statusCode)
-                        ->withHeader('Content-Type', 'Application/json')
-                        ->withJson(["message" => $exception->getMessage()], $statusCode);
-    };
-};
+//$container['errorHandler'] = function ($container) {
+//    return function ($request, $response, $exception) use ($container) {
+//        $statusCode = $exception->getCode() ? $exception->getCode() : 500;
+//        return $container['response']->withStatus($statusCode)
+//                        ->withHeader('Content-Type', 'Application/json')
+//                        ->withJson(["message" => $exception->getMessage()], $statusCode);
+//    };
+//};
 
 /**
  * Converte os Exceptions de Erros 405 - Not Allowed

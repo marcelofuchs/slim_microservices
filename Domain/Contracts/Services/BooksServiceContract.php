@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Contracts\Service;
+namespace Domain\Contracts\Services;
 
 interface BooksServiceContract {
     

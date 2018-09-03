@@ -1,7 +1,7 @@
 <?php
 
-namespace Domain\Contracts\Repository;
+namespace Domain\Contracts\Repositories;
 
-interface BooksRepositoryContract{
+interface BooksRepositoryContract extends BaseRepositoryContract {
 
 }

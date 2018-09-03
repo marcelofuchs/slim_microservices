@@ -9,8 +9,8 @@ $app->group('/v1', function() {
      * Dentro de v1, o recurso /book
      */
     $this->group('/book', function() {
-        $this->get('', '\Application\Books\Http\v1\Controllers\BookController:listBook');
-        $this->post('', '\Application\Books\Http\v1\Controllers\BookController:createBook');
+        $this->get('', Application\Books\Http\v1\Actions\BookList::class);
+        $this->post('', Application\Books\Http\v1\Actions\BookCreate::class);
         
         /**
          * Validando se tem um integer no final da URL

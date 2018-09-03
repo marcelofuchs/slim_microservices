@@ -18,36 +18,27 @@ class EntityManager implements \Domain\Contracts\Persistence\EntityManagerContra
     /**
      * @inheritdoc
      */
-    public static function create($settings = []) {       
-        
-        $config = Setup::createYAMLMetadataConfiguration(
-            $settings['metadata_dirs'], $settings['dev_mode']
-        );
-        
-//        $config->setMetadataDriverImpl(
-//            new AnnotationDriver(
-//                new AnnotationReader, $settings['metadata_dirs']
-//            )
-//        );
+    public static function create($settings = []) {
+
+        $config = new \Doctrine\ORM\Configuration();
+        $config->setAutoGenerateProxyClasses(true);
+        $config->setProxyDir($settings['cache_dir']);
+        $config->setProxyNamespace('Domain\Entities');
         $config->setMetadataDriverImpl(
             new \Doctrine\ORM\Mapping\Driver\YamlDriver(
                  $settings['metadata_dirs']
             )
         );
 
-        $config->setMetadataCacheImpl(
-            new FilesystemCache(
-                $settings['cache_dir']
-            )
-        );
-
         $config->setNamingStrategy(new \Doctrine\ORM\Mapping\UnderscoreNamingStrategy);
         $config->setQueryCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
         $config->setMetadataCacheImpl(new \Doctrine\Common\Cache\ArrayCache);
+
+        $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
+
+        return $entityManager;
         
-        return DoctrineManager::create(
-            $settings['connection'], $config
-        );
+        return $manager;
     }
 
 }
