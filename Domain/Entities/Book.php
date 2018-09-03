@@ -4,26 +4,21 @@ namespace Domain\Entities;
 
 /**
  * Book Entity
- * 
  * */
 class Book {
 
     /**
      * @var int
-     * @Id @Column(type="integer") 
-     * @GeneratedValue
      */
     public $id;
 
     /**
      * @var string
-     * @Column(type="string") 
      */
     public $name;
 
     /**
      * @var string
-     * @Column(type="string") 
      */
     public $author;
 
@@ -49,7 +44,7 @@ class Book {
     }
 
     /**
-     * @return App\Models\Entity\Book
+     * @return Book
      */
     public function setName($name) {
 
@@ -62,7 +57,7 @@ class Book {
     }
 
     /**
-     * @return App\Models\Entity\Book
+     * @return Book
      */
     public function setAuthor($author) {
 
@@ -75,10 +70,9 @@ class Book {
     }
 
     /**
-     * @return App\Models\Entity\Book
+     * @return Book
      */
     public function getValues() {
         return get_object_vars($this);
     }
-
 }
