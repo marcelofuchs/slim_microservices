@@ -2,3 +2,4 @@ vendor
 .vscode
 environment/logs
 environment/redis/data
+nbproject
