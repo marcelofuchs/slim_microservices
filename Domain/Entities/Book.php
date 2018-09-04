@@ -23,6 +23,11 @@ class Book {
     public $author;
 
     /**
+     * @var string
+     */
+    public $description;
+
+    /**
      * @return int id
      */
     public function getId() {
@@ -74,5 +79,14 @@ class Book {
      */
     public function getValues() {
         return get_object_vars($this);
+    }
+    
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+        return $this;
     }
 }

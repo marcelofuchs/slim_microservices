@@ -58,3 +58,17 @@ Cada aplicação deve ser totalmente independente, ao subir uma aplicação de B
 # ./micro.sh doctrine orm:convert-mapping --from-database yaml ./Infrastructure/Persistence/Doctrine/Mappings --namespace=Domain\\\\Entities\\\\
 
 ```
+
+- Atualiza banco de dados.
+
+```
+# ./micro.sh doctrine orm:schema-tool:update --force
+
+```
+
+-  Gera script de atualização do banco de dados.
+
+```
+# ./micro.sh doctrine orm:schema-tool:update --dump-sql
+
+```

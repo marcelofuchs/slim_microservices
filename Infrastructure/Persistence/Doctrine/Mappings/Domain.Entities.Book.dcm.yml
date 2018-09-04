@@ -18,6 +18,11 @@
             length: 50
             options:
                 fixed: false
+        description:
+            type: text
+            nullable: false
+            options:
+                fixed: false
         author:
             type: string
             nullable: true
