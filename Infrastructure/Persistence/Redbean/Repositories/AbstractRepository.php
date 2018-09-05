@@ -1,13 +1,18 @@
 <?php
 
-namespace Infrastructure\Persistence\Doctrine\Repositories;
+namespace Infrastructure\Persistence\Redbean\Repositories;
+
+use RedBeanPHP\R;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Domain\Contracts\Repositories\BaseRepositoryContract;
 use Domain\Contracts\Entities\EntityContract;
 
-abstract class AbstractRepository extends EntityRepository implements BaseRepositoryContract {
+/**
+ * @TODO - É PRECISO ADAPTAR CONSULTAS.
+ */
+abstract class AbstractRepository implements BaseRepositoryContract {
 
     /** @var string */
     protected $alias;
@@ -202,15 +207,8 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
      * @inheritdoc
      */
     public function findAll() {
-        $conn = $this->getEntityManager()
-            ->getConnection();
-        $sql = 'select * from "Book" where '.time().'>0 ';
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll();
-        
-        $queryBuilder = $this->queryBuilder();
-        return $queryBuilder->getQuery()->getResult();
+       // $queryBuilder = $this->queryBuilder();
+       return R::getAll('select * from "'.$this->getTableName().'" where '.time().'>0 ');
     }
 
     /**
@@ -293,7 +291,7 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
     
-    public function save(EntityContract $repurchase)
+    public function save(EntityContract $entity)
     {
         $this->getEntityManager()->persist($repurchase);
         $this->getEntityManager()->flush();
@@ -307,4 +305,6 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
     {
         return $this->_em;
     }
+    
+    protected abstract function getTableName():string;
 }

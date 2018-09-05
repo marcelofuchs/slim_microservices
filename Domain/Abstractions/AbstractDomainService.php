@@ -2,7 +2,9 @@
 
 namespace Domain\Abstractions;
 
-abstract class AbstractDomainService
+use \Domain\Contracts\Services\BaseServiceContract;
+
+abstract class AbstractDomainService implements BaseServiceContract
 {
     public $repository;
 

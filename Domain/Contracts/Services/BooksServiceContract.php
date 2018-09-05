@@ -2,6 +2,6 @@
 
 namespace Domain\Contracts\Services;
 
-interface BooksServiceContract {
+interface BooksServiceContract extends BaseServiceContract {
     
 }

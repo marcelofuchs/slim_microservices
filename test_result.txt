@@ -1,0 +1,24 @@
+
+ Total de requisições: 4271 -  71.183333333333/segundo 
+Sucesso: 4271 -  71.183333333333/segundo 
+Falhas: 0 -  0/segundo 
+
+ Total de requisições: 4337 -  72.283333333333/segundo 
+Sucesso: 4337 -  72.283333333333/segundo 
+Falhas: 0 -  0/segundo 
+
+ Total de requisições: 4620 -  77/segundo 
+Sucesso: 4620 -  77/segundo 
+Falhas: 0 -  0/segundo
+
+ Total de requisições: 4091 -  68.183333333333/segundo 
+Sucesso: 4091 -  68.183333333333/segundo 
+Falhas: 0 -  0/segundo 
+
+ Total de requisições: 4555 -  75.916666666667/segundo 
+Sucesso: 4555 -  75.916666666667/segundo 
+Falhas: 0 -  0/segundo 
+
+ Total de requisições: 4093 -  68.216666666667/segundo 
+Sucesso: 4093 -  68.216666666667/segundo 
+Falhas: 0 -  0/segundo 

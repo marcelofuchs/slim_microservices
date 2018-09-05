@@ -18,7 +18,8 @@ return [
             ],
             
             'connection' => [
-                'driver' => getenv('DATABASE_DRIVER'),
+                'driver' => 'pgsql',//redbean
+                //'driver' => getenv('DATABASE_DRIVER'),//doctrine
                 'host' => getenv('DATABASE_HOST'),
                 'port' => getenv('DATABASE_PORT'),
                 'user' => getenv('DATABASE_USER'),

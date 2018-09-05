@@ -14,7 +14,7 @@ class BookCreate extends AbstractAction {
     /**
      * Container Class
      * 
-     * @var \Domain\Contracts\Service\BooksServiceContract
+     * @var \Domain\Contracts\Services\BaseServiceContract
      */
     private $service;
 
@@ -37,7 +37,13 @@ class BookCreate extends AbstractAction {
     public function __invoke(Request $request, Response $response, $args=[]) {   
         
         $data = json_decode($request->getBody()->getContents(), true);
-        print_r($data);exit;
+        $entity = new \Domain\Entities\Book();             
+        $entity->setAuthor($data['author']);            
+        $entity->setName($data['name']);            
+        $entity->setDescription($data['description']);
+        $books = $this->service->save($entity);
+        
+        return $response->withJson($books, 200)->withHeader('Content-type', 'application/json');
 
 //        $command = \Repurchase\Application\Command\NewRepurchase::fromArray($data);
 //        $this->commandBus->dispatch($command);

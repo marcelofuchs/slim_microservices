@@ -14,6 +14,13 @@ abstract class AbstractAction
      * @var [object]
      */
     protected $container;
+    
+    /**
+     * Container Class
+     * 
+     * @var [object]
+     */
+    protected $commandBus;
 
     /**
      * Class Constructor

@@ -2,12 +2,6 @@
 
 namespace Infrastructure\Persistence\Doctrine;
 
-use Doctrine\ORM\Tools\Setup;
-use Doctrine\ORM\EntityManager as DoctrineManager;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Cache\FilesystemCache;
-
 /**
  * Description of EntityManager
  *
@@ -37,8 +31,6 @@ class EntityManager implements \Domain\Contracts\Persistence\EntityManagerContra
         $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
 
         return $entityManager;
-        
-        return $manager;
     }
 
 }

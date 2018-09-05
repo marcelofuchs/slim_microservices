@@ -2,6 +2,8 @@
 
 namespace Domain\Contracts\Repositories;
 
+use Domain\Contracts\Entities\EntityContract;
+
 interface BaseRepositoryContract {
 
     /**
