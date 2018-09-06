@@ -2,9 +2,9 @@
 
 namespace Domain\Contracts\Repositories;
 
-use Domain\Contracts\Entities\EntityContract;
+use Domain\Contracts\Entities\EntityInterface;
 
-interface BaseRepositoryContract {
+interface BaseRepositoryInterface {
 
     /**
      * Retorna a contagem total da última consulta realizada, se for
@@ -27,14 +27,15 @@ interface BaseRepositoryContract {
 
     /**
      * Find
-     * 
+     *
      * Encontra apenas 1 registro de acordo com o id
-     * 
-     * @param type $id
+     *
+     * @param int $id
      * @param type $lockMode
      * @param type $lockVersion
+     * @return
      */
-    public function find($id, $lockMode = null, $lockVersion = null);
+    public function find(int $id, $lockMode = null, $lockVersion = null);
     
     /**
      * Find All
@@ -45,11 +46,12 @@ interface BaseRepositoryContract {
 
     /**
      * Find By
-     * 
+     *
      * @param array $criteria
      * @param array $orderBy
-     * @param type $limit
-     * @param type $offset
+     * @param int $limit
+     * @param int $offset
+     * @return
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
 
@@ -67,14 +69,15 @@ interface BaseRepositoryContract {
      * @param \Closure $handler
      */
     public function transactional(\Closure $handler);
-    
+
     /**
      * Get List
-     * 
+     *
      * @param array $criteria
      * @param array $sort
      * @param int $limit
      * @param int $offset
+     * @return array
      */
     public function getList(array $criteria, array $sort = [], int $limit = 10, int $offset = 0): array;
 

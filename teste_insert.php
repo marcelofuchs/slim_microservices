@@ -38,6 +38,7 @@ while ($time > $t - 60) {
         $requisicoes++;
         //echo ".";
         //var_dump($response);
+        //exit;
     }
     
     $t = time();

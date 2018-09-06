@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Infrastructure\Persistence\Doctrine\Repositories;
 
-use Domain\Contracts\Repositories\BooksRepositoryContract;
+use Domain\Contracts\Repositories\BooksRepositoryInterface;
 
-class BooksRepository extends AbstractRepository implements BooksRepositoryContract {
+class BooksRepository extends AbstractRepository implements BooksRepositoryInterface {
 
     /**
      * @innheritdoc

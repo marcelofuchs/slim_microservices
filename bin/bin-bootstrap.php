@@ -28,7 +28,7 @@ require_once (__DIR__.'/../Domain/Contracts/injections.php') ;
 
 // DATABASE DEFAULT PRELOAD
 $container['em'] = function (Container $container) {
-    $manager = $container->get(\Domain\Contracts\Persistence\EntityManagerContract::class);
+    $manager = $container->get(\Domain\Contracts\Persistence\EntityManagerInterface::class);
     return $manager::create( $container['settings']['mm_crm'] );
 };
 

@@ -9,7 +9,7 @@ use \RedBeanPHP\R;
  *
  * @author marcelo
  */
-class EntityManager implements \Domain\Contracts\Persistence\EntityManagerContract {
+class EntityManager implements \Domain\Contracts\Persistence\EntityManagerInterface {
 
     /**
      * @inheritdoc

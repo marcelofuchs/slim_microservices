@@ -7,7 +7,7 @@ namespace Infrastructure\Persistence\Doctrine;
  *
  * @author marcelo
  */
-class EntityManager implements \Domain\Contracts\Persistence\EntityManagerContract {
+class EntityManager implements \Domain\Contracts\Persistence\EntityManagerInterface {
 
     /**
      * @inheritdoc

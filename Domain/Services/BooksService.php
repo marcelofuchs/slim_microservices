@@ -3,9 +3,9 @@
 namespace Domain\Services;
 
 use Domain\Abstractions\AbstractDomainService;
-use Domain\Contracts\Services\BooksServiceContract;
+use Domain\Contracts\Services\BooksServiceInterface;
 
-class BooksService extends AbstractDomainService implements BooksServiceContract
+class BooksService extends AbstractDomainService implements BooksServiceInterface
 {
     public function __construct($repositoryContract)
     {

@@ -2,12 +2,12 @@
 
 namespace Domain\Entities;
 
-use \Domain\Contracts\Entities\EntityContract;
+use \Domain\Contracts\Entities\EntityInterface;
 
 /**
  * Book Entity
  * */
-class Book implements EntityContract {
+class Book implements EntityInterface {
 
     /**
      * @var int

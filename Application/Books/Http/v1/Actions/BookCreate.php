@@ -3,7 +3,7 @@
 namespace Application\Books\Http\v1\Actions;
 
 use Domain\Abstractions\AbstractAction;
-use Domain\Contracts\Services\BooksServiceContract;
+use Domain\Contracts\Services\BooksServiceInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -16,7 +16,7 @@ class BookCreate extends AbstractAction
     /**
      * Container Class
      *
-     * @var \Domain\Contracts\Services\BaseServiceContract
+     * @var \Domain\Contracts\Services\BaseServiceInterface
      */
     private $service;
 
@@ -26,7 +26,7 @@ class BookCreate extends AbstractAction
     public function __construct($container)
     {
         parent::__construct($container);
-        $this->service = $this->container->get(BooksServiceContract::class);
+        $this->service = $this->container->get(BooksServiceInterface::class);
     }
 
     /**

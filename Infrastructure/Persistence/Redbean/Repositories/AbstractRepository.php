@@ -6,13 +6,13 @@ use RedBeanPHP\R;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Domain\Contracts\Repositories\BaseRepositoryContract;
-use Domain\Contracts\Entities\EntityContract;
+use Domain\Contracts\Repositories\BaseRepositoryInterface;
+use Domain\Contracts\Entities\EntityInterface;
 
 /**
  * @TODO - É PRECISO ADAPTAR CONSULTAS.
  */
-abstract class AbstractRepository implements BaseRepositoryContract {
+abstract class AbstractRepository implements BaseRepositoryInterface {
 
     /** @var string */
     protected $alias;
@@ -291,7 +291,7 @@ abstract class AbstractRepository implements BaseRepositoryContract {
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
     
-    public function save(EntityContract $entity)
+    public function save(EntityInterface $entity)
     {
         $this->getEntityManager()->persist($repurchase);
         $this->getEntityManager()->flush();

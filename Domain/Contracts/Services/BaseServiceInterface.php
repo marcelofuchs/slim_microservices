@@ -1,0 +1,109 @@
+<?php
+
+namespace Domain\Contracts\Services;
+
+/**
+ * Interface BaseServiceInterface
+ *
+ * @package Domain\Contracts\Services
+ */
+interface BaseServiceInterface {
+
+    /**
+     * @param $arrayRecords
+     * @return mixed
+     */
+    public function batchCreate($arrayRecords);
+
+    /**
+     * @return mixed
+     */
+    public function findAll();
+
+    /**
+     * @param $filter
+     * @return mixed
+     */
+    public function findAllFiltered($filter);
+
+    /**
+     * @param $entityId
+     * @return mixed
+     */
+    public function find($entityId);
+
+    /**
+     * @param $arrKeyValue
+     * @return mixed
+     */
+    public function findBy($arrKeyValue);
+
+    /**
+     * @param $arrKeyValue
+     * @return mixed
+     */
+    public function findAllBy($arrKeyValue);
+
+    /**
+     * @param $filter
+     * @return mixed
+     */
+    public function findAllByFilter($filter);
+
+    /**
+     * @param $post
+     * @return mixed
+     */
+    public function loadNew($post);
+
+    /**
+     * @return mixed
+     */
+    public function getEntity();
+
+    /**
+     * @param $post
+     * @return mixed
+     */
+    public function create($post);
+
+    /**
+     * @param $entity
+     * @return mixed
+     */
+    public function save($entity);
+
+    /**
+     * @param $entityId
+     * @param $post
+     * @return mixed
+     */
+    public function update($entityId, $post);
+
+    /**
+     * @param $entity
+     * @param $post
+     * @return mixed
+     */
+    public function updateEntity($entity, $post);
+
+    /**
+     * @param $entityId
+     * @return mixed
+     */
+    public function delete($entityId);
+
+    /**
+     * @param $parameter
+     * @param $exceptionMessage
+     * @return mixed
+     */
+    public function alreadyExists($parameter, $exceptionMessage);
+
+    /**
+     * @param $companyId
+     * @return mixed
+     */
+    public function count($companyId);
+    
+}

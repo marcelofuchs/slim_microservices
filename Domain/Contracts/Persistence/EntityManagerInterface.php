@@ -7,7 +7,7 @@ namespace Domain\Contracts\Persistence;
  * 
  * @author marcelo
  */
-interface EntityManagerContract {
+interface EntityManagerInterface {
 
     /**
      * Create unique entity manager (Doctrine/Eloquent)

@@ -2,6 +2,6 @@
 
 namespace Domain\Contracts\Entities;
 
-interface EntityContract {
+interface EntityInterface {
 
 }
