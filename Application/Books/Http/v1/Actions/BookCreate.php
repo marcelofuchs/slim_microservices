@@ -1,19 +1,21 @@
 <?php
+
 namespace Application\Books\Http\v1\Actions;
 
-use \Psr\Http\Message\ServerRequestInterface as Request;
-use \Psr\Http\Message\ResponseInterface as Response;
-use \Domain\Contracts\Services\BooksServiceContract;
-use \Domain\Abstractions\AbstractAction;
+use Domain\Abstractions\AbstractAction;
+use Domain\Contracts\Services\BooksServiceContract;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Action Create
  */
-class BookCreate extends AbstractAction {
+class BookCreate extends AbstractAction
+{
 
     /**
      * Container Class
-     * 
+     *
      * @var \Domain\Contracts\Services\BaseServiceContract
      */
     private $service;
@@ -21,28 +23,30 @@ class BookCreate extends AbstractAction {
     /**
      * @inheritdoc
      */
-    public function __construct($container) {
+    public function __construct($container)
+    {
         parent::__construct($container);
         $this->service = $this->container->get(BooksServiceContract::class);
     }
-    
+
     /**
-     * Cria um novo cadastro de Livro
-     * 
-     * @param [type] $request
-     * @param [type] $response
-     * @param [type] $args
-     * @return Response
+     * Invoke
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param array $args
+     * @return mixed
      */
-    public function __invoke(Request $request, Response $response, $args=[]) {   
-        
+    public function __invoke(Request $request, Response $response, $args = [])
+    {
+
         $data = json_decode($request->getBody()->getContents(), true);
-        $entity = new \Domain\Entities\Book();             
-        $entity->setAuthor($data['author']);            
-        $entity->setName($data['name']);            
+        $entity = new \Domain\Entities\Book();
+        $entity->setAuthor($data['author']);
+        $entity->setName($data['name']);
         $entity->setDescription($data['description']);
         $books = $this->service->save($entity);
-        
+
         return $response->withJson($books, 200)->withHeader('Content-type', 'application/json');
 
 //        $command = \Repurchase\Application\Command\NewRepurchase::fromArray($data);
@@ -54,7 +58,7 @@ class BookCreate extends AbstractAction {
 //            'success' => (!empty($command->getRepurchaseId()))
 //        ], 202);
     }
-    
+
 //    /**
 //     * Cria um livro
 //     * 
@@ -202,5 +206,5 @@ class BookCreate extends AbstractAction {
 //            ->withHeader('Content-type', 'application/json');
 //        return $return;    
 //    }
-    
+
 }

@@ -4,37 +4,35 @@ namespace Application\Authenticator\Http\v1\Controllers;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-
 use Firebase\JWT\JWT;
 
 /**
- * Controller de Autenticação
+ * Auth Controller
+ * 
+ * @package Application\Authenticator\Http\v1\Controllers
  */
 class AuthController {
 
+    /** @var object  */
+    protected $container;
+
     /**
-     * Container
-     * @var object s
+     * @inheritdoc
      */
-   protected $container;
-   
-   /**
-    * Undocumented function
-    * @param ContainerInterface $container
-    */
-   public function __construct($container) {
-       $this->container = $container;
-   }
-   
-   /**
-    * Invokable Method
-    * @param Request $request
-    * @param Response $response
-    * @param [type] $args
-    * @return void
-    */
-   public function __invoke(Request $request, Response $response, $args) {
-       
+    public function __construct($container) {
+        $this->container = $container;
+    }
+
+    /**
+     * Invoke class
+     * 
+     * @param Request $request
+     * @param Response $response
+     * @param type $args
+     * @return type
+     */
+    public function __invoke(Request $request, Response $response, $args) {
+
         /**
          * JWT Key
          */
@@ -49,6 +47,7 @@ class AuthController {
         $jwt = JWT::encode($token, $key);
 
         return $response->withJson(["auth-jwt" => $jwt], 200)
-            ->withHeader('Content-type', 'application/json');   
-   }
+                        ->withHeader('Content-type', 'application/json');
+    }
+
 }
