@@ -45,17 +45,17 @@ $container['errorHandler'] = function ($container) {
 
 /**
  * Converte os Exceptions de Erros 405 - Not Allowed
- */
-$container['notAllowedHandler'] = function ($container) {
-    return function ($request, $response, $methods) use ($container) {
-        return $container['response']
-                        ->withStatus(405)
-                        ->withHeader('Allow', implode(', ', $methods))
-                        ->withHeader('Content-Type', 'Application/json')
-                        ->withHeader("Access-Control-Allow-Methods", implode(",", $methods))
-                        ->withJson(["message" => "Method not Allowed; Method must be one of: " . implode(', ', $methods)], 405);
-    };
-};
+// */
+ $container['notAllowedHandler'] = function ($container) {
+     return function ($request, $response, $methods) use ($container) {
+         return $container['response']
+                         ->withStatus(405)
+                         ->withHeader('Allow', implode(', ', $methods))
+                         ->withHeader('Content-Type', 'Application/json')
+                         ->withHeader("Access-Control-Allow-Methods", implode(",", $methods))
+                         ->withJson(["message" => "Method not Allowed; Method must be one of: " . implode(', ', $methods)], 405);
+     };
+ };
 
 /**
  * Converte os Exceptions de Erros 404 - Not Found

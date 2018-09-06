@@ -103,8 +103,8 @@ services:
         container_name: pgadmin
         build: ./environment/pgadmin
         environment:
-            DEFAULT_USER: db@madeiramadeira.com.br
-            DEFAULT_PASSWORD: madeira@1234
+            PGADMIN_DEFAULT_EMAIL: db@madeiramadeira.com.br
+            PGADMIN_DEFAULT_PASSWORD: madeira@1234
 #            MAIL_SERVER: localhost
 #            MAIL_PORT: 25
 #            MAIL_USE_SSL: False
@@ -112,6 +112,6 @@ services:
 #            MAIL_USERNAME: None
 #            MAIL_PASSWORD: None
         ports:
-            - "5050:5050"
+            - "5050:80"
         links:
             - db

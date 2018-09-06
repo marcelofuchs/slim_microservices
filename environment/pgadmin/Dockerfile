@@ -1,2 +1,2 @@
-FROM fenglc/pgadmin4
+FROM dpage/pgadmin4
 

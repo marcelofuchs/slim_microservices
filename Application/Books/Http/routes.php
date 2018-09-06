@@ -10,14 +10,9 @@ $app->group('/v1', function() {
      */
     $this->group('/book', function() {
         $this->get('', Application\Books\Http\v1\Actions\BookList::class);
+        $this->get('/{id:[0-9]+}', Application\Books\Http\v1\Actions\BookOne::class);
+        $this->put('/{id:[0-9]+}', Application\Books\Http\v1\Actions\BookUpdate::class);
         $this->post('', Application\Books\Http\v1\Actions\BookCreate::class);
-        
-        /**
-         * Validando se tem um integer no final da URL
-         */
-        $this->get('/{id:[0-9]+}', '\Application\Books\Http\v1\Controllers\BookController:viewBook');
-        $this->put('/{id:[0-9]+}', '\Application\Books\Http\v1\Controllers\BookController:updateBook');
-        $this->delete('/{id:[0-9]+}', '\Application\Books\Http\v1\Controllers\BookController:deleteBook');
+        $this->delete('/{id:[0-9]+}', Application\Books\Http\v1\Actions\BookDelete::class);
     });
-    
 });
