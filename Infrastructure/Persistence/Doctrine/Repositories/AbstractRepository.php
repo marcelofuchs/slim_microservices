@@ -306,6 +306,17 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
     }
 
     /**
+     * @inheritdoc
+     */
+    public function delete($id, $lockMode = null, $lockVersion = null) {
+        $entity = $this->find($id, $lockMode = null, $lockVersion = null);
+        $this->getEntityManager()->remove($entity);
+        $this->getEntityManager()->flush();
+        
+        return ($entity)? true : false;
+    }
+
+    /**
      * @return EntityManager
      */
     protected function getEntityManager()

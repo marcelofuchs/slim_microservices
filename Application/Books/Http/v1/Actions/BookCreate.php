@@ -1,6 +1,7 @@
 <?php
 namespace Application\Books\Http\v1\Actions;
 
+use Domain\Entities\Book;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Domain\Contracts\Services\BooksServiceContract;
@@ -22,20 +23,21 @@ class BookCreate extends AbstractAction {
      * @inheritdoc
      */
     public function __construct($container) {
+        $book = new Book();
         parent::__construct($container);
         $this->service = $this->container->get(BooksServiceContract::class);
     }
-    
+
     /**
      * Cria um novo cadastro de Livro
-     * 
+     *
      * @param [type] $request
      * @param [type] $response
      * @param [type] $args
      * @return Response
      */
     public function __invoke(Request $request, Response $response, $args=[]) {   
-        
+
         $data = json_decode($request->getBody()->getContents(), true);
         $entity = new \Domain\Entities\Book();             
         $entity->setAuthor($data['author']);            

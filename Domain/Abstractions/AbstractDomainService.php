@@ -30,7 +30,7 @@ abstract class AbstractDomainService implements BaseServiceContract
 
     public function findAllFiltered($filter)
     {
-        return $this->repository->findAllFiltered($filter);
+        return $this->repository->findAllFiltered($filter);                       
     }
 
     public function find($entityId)
@@ -90,7 +90,7 @@ abstract class AbstractDomainService implements BaseServiceContract
 
     public function delete($entityId)
     {
-        return $this->repository->deleteById($entityId);
+        return $this->repository->delete($entityId);
     }
 
     public function alreadyExists($parameter,$exceptionMessage)
