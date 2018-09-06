@@ -7,21 +7,6 @@ Falhas: 0 -  0/segundo
 Sucesso: 304 -  5.0666666666667/segundo 
 Falhas: 0 -  0/segundo 
 
-
-//doctrine
-
- Total de requisições: 86 -  1.4333333333333/segundo 
-Sucesso: 86 -  1.4333333333333/segundo 
-Falhas: 0 -  0/segundo
-
- Total de requisições: 33 -  0.55/segundo 
-Sucesso: 33 -  0.55/segundo 
-Falhas: 0 -  0/segundo 
-
- Total de requisições: 55 -  0.91666666666667/segundo 
-Sucesso: 55 -  0.91666666666667/segundo 
-Falhas: 0 -  0/segundo 
-
  Total de requisições: 300 -  5/segundo 
 Sucesso: 300 -  5/segundo 
 Falhas: 0 -  0/segundo 
@@ -32,4 +17,31 @@ Falhas: 0 -  0/segundo
 
  Total de requisições: 305 -  5.0833333333333/segundo 
 Sucesso: 305 -  5.0833333333333/segundo 
+Falhas: 0 -  0/segundo
+
+
+//doctrine object
+ Total de requisições: 86 -  1.4333333333333/segundo 
+Sucesso: 86 -  1.4333333333333/segundo 
+Falhas: 0 -  0/segundo
+
+ Total de requisições: 33 -  0.55/segundo 
+Sucesso: 33 -  0.55/segundo 
+Falhas: 0 -  0/segundo 
+
+ Total de requisições: 55 -  0.91666666666667/segundo 
+Sucesso: 55 -  0.91666666666667/segundo 
+Falhas: 0 -  0/segundo  
+
+//doctrine array
+ Total de requisições: 293 -  4.8833333333333/segundo 
+Sucesso: 293 -  4.8833333333333/segundo 
+Falhas: 0 -  0/segundo 
+
+ Total de requisições: 305 -  5.0833333333333/segundo 
+Sucesso: 305 -  5.0833333333333/segundo 
+Falhas: 0 -  0/segundo 
+
+ Total de requisições: 284 -  4.7333333333333/segundo 
+Sucesso: 284 -  4.7333333333333/segundo 
 Falhas: 0 -  0/segundo 

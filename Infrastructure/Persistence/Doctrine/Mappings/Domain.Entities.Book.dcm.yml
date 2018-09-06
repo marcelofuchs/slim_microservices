@@ -1,6 +1,6 @@
 'Domain\Entities\Book':
     type: entity
-    table: '"Book"'
+    table: 'book'
     repositoryClass: Infrastructure\Persistence\Doctrine\Repositories\BooksRepository
     id:
         id:
