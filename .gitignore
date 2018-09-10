@@ -3,4 +3,5 @@ vendor
 .idea
 environment/logs
 environment/redis/data
+environment/postgres/data
 nbproject
