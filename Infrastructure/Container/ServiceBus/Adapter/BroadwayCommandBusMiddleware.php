@@ -2,8 +2,8 @@
 
 namespace Infrastructure\Container\ServiceBus\Adapter;
 
-use MMLabs\Core\ServiceBus\Command\CommandInterface;
-use MMLabs\Core\ServiceBus\CommandBus\CommandBusMiddlewareInterface;
+use Infrastructure\Container\ServiceBus\Command\CommandInterface;
+use Infrastructure\Container\ServiceBus\CommandBus\CommandBusMiddlewareInterface;
 
 class BroadwayCommandBusMiddleware implements CommandBusMiddlewareInterface
 {

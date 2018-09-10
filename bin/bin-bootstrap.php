@@ -24,7 +24,7 @@ $baseEnv->load();
 $container = new Container(require_once __DIR__.'/../config/settings.global.php');
 
 //Injections
-require_once (__DIR__.'/../Domain/Contracts/injections.php') ;
+require_once (__DIR__ . '/../Domain/Contracts/dependencies.php') ;
 
 // DATABASE DEFAULT PRELOAD
 $container['em'] = function (Container $container) {

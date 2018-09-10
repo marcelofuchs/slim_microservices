@@ -1,0 +1,25 @@
+Domain\Entities\Author:
+    type: entity
+    table: author
+        repositoryClass: Infrastructure\Persistence\Doctrine\Repositories\AuthorRepository
+    uniqueConstraints:
+        author_name_uindex:
+            columns:
+                - name
+    id:
+        id:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 1
+            options:
+                fixed: true
+    lifecycleCallbacks: {  }

@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Repurchase\Infrastructure\Container\Infrastructure;
+namespace Infrastructure\Container\Command;
 
 use Broadway\CommandHandling\SimpleCommandBus;
+use Infrastructure\Container\EventBus\InjectEventBusTrait;
+use Infrastructure\Container\Middleware\LogCommandsMiddleware;
+//use Infrastructure\Container\Middleware\TransactionalMiddleware; // if transactional
+use Infrastructure\Container\ServiceBus\Adapter\BroadwayCommandBus;
+use Infrastructure\Container\ServiceBus\Adapter\BroadwayCommandBusMiddleware;
+use Infrastructure\Container\ServiceBus\CommandBus\CommandBusSupportingMiddleware;
+use Infrastructure\Container\ServiceBus\CommandBus\InjectCommandBusTrait;
+use Infrastructure\Container\ServiceBus\EventBusInterface;
 use Interop\Container\ContainerInterface;
-//use MMLabs\Core\ServiceBus\Adapter\BroadwayCommandBus;
-//use MMLabs\Core\ServiceBus\Adapter\BroadwayCommandBusMiddleware;
-//use MMLabs\Core\ServiceBus\CommandBus\CommandBusSupportingMiddleware;
-//use MMLabs\Core\ServiceBus\CommandBus\InjectCommandBusTrait;
-//use MMLabs\Core\ServiceBus\EventBus\InjectEventBusTrait;
-//use MMLabs\Core\ServiceBus\EventBusInterface;
-//use MMLabs\Core\Middleware\LogCommandsMiddleware;
-//use MMLabs\Core\Middleware\TransactionalMiddleware;
 
 final class CommandBusFactory
 {
     public function __invoke(ContainerInterface $container)
     {
         $handlers           = $container->get('config')['command_bus']['handlers'];
-        $broadwayCommandBus = new BroadwayCommandBus(new SimpleCommandBus);
+        $broadwayCommandBus = new BroadwayCommandBus(new SimpleCommandBus());
         $services           = [];
 
         foreach ($handlers as $handlerService) {
@@ -31,9 +31,9 @@ final class CommandBusFactory
             $broadwayCommandBus->subscribe($service);
         }
 
-        $commandBusMiddleware = new CommandBusSupportingMiddleware;
+        $commandBusMiddleware = new CommandBusSupportingMiddleware();
         $commandBusMiddleware->appendMiddleware(new LogCommandsMiddleware($container->get('logger')));
-        /*$commandBusMiddleware->appendMiddleware(new TransactionalMiddleware(
+       /* $commandBusMiddleware->appendMiddleware(new TransactionalMiddleware(
             $container->get('doctrine.entity_manager.orm_default')
         ));*/
         $commandBusMiddleware->appendMiddleware(new BroadwayCommandBusMiddleware($broadwayCommandBus));

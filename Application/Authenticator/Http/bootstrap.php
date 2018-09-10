@@ -24,7 +24,9 @@ $configs = [
  * da nossa API
  */
 $container = new \Slim\Container($configs);
-require_once (__DIR__.'/../../../Domain/Contracts/injections.php') ;
+
+//Injections
+require_once (__DIR__ . '/../../../config/dependencies.php');
 
 /**
  * Converte os Exceptions Genéricas dentro da Aplicação em respostas JSON

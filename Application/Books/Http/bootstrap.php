@@ -29,7 +29,8 @@ $overEnv->overload();
 $container = new Container(require_once __DIR__ . '/../config/settings.php');
 
 //Injections
-require_once (__DIR__ . '/../../../Domain/Contracts/injections.php');
+require_once (__DIR__ . '/../../../config/dependencies.php');
+require_once (__DIR__ . '/../config/dependencies.php');
 
 /**
  * Converte os Exceptions Genéricas dentro da Aplicação em respostas JSON

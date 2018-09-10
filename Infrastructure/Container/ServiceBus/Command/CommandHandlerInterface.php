@@ -1,7 +1,19 @@
 <?php
+
+declare(strict_types=1);
+
+namespace Infrastructure\Container\ServiceBus\Command;
+
 /**
- * Created by PhpStorm.
- * User: marcelo
- * Date: 10/09/18
- * Time: 10:51
+ * Interface CommandHandlerInterface
+ *
+ * @package Infrastructure\Container\ServiceBus\Command
  */
+interface CommandHandlerInterface
+{
+    /**
+     * @param mixed $command
+     * @return mixed
+     */
+    public function handle($command);
+}
