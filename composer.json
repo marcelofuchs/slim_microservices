@@ -10,7 +10,8 @@
     "akrabat/rka-scheme-and-host-detection-middleware": "^0.3.0",
     "vlucas/phpdotenv": "^2.5",
     "symfony/yaml": "^4.1",
-    "gabordemooij/redbean": "^5.1"
+    "gabordemooij/redbean": "^5.1",
+    "broadway/broadway": "^2.0"
   },
   "autoload": {
     "psr-4": {
