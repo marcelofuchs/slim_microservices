@@ -1,5 +1,4 @@
 <?php
-
 return [
     'settings' => [
         'displayErrorDetails' => true,
@@ -18,7 +17,7 @@ return [
             ],
             
             'connection' => [
-                'driver' => getenv('DATABASE_DRIVER'),//doctrine
+                'driver' => getenv('DATABASE_DRIVER'),
                 'host' => getenv('DATABASE_HOST'),
                 'port' => getenv('DATABASE_PORT'),
                 'user' => getenv('DATABASE_USER'),
