@@ -3,9 +3,10 @@
 namespace Domain\Abstractions;
 
 use Infrastructure\Container\Factory\Actions\BaseActionInterface;
+use Infrastructure\Container\ServiceBus\CommandBusInterface;
+use Interop\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Container\ContainerInterface;
 
 abstract class AbstractAction implements BaseActionInterface
 {
@@ -17,19 +18,21 @@ abstract class AbstractAction implements BaseActionInterface
     protected $container;
 
     /**
-     * Container Class
-     *
-     * @var [object]
+     * @var CommandBusInterface
      */
-    protected $commandBus;
+    private $commandBus;
 
     /**
      * Class Constructor
      * @param ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(
+        ContainerInterface $container,
+        CommandBusInterface $commandBus
+    )
     {
         $this->container = $container;
+        $this->commandBus = $commandBus;
     }
 
     /**
