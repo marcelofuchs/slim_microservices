@@ -35,6 +35,8 @@ class BookList extends AbstractAction {
      * @return Response
      */
     public function __invoke(Request $request, Response $response, $args=[]) {
+
+
         $books = $this->service->findAll();
         return $response->withJson($books, 200)->withHeader('Content-type', 'application/json');
     }    

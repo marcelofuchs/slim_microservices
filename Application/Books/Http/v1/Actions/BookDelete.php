@@ -34,7 +34,7 @@ class BookDelete extends AbstractAction {
      * @param [type] $args
      * @return Response
      */
-    public function __invoke(Request $request, Response $response, $args=[]) {   
+    public function __invoke(Request $request, Response $response, $args=[]) {
        $id = (int) $args['id'];
 
        $this->service->delete($id);
