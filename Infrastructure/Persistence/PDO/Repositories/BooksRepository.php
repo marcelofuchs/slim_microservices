@@ -31,7 +31,6 @@ class BooksRepository extends AbstractRepository implements BooksRepositoryInter
         try {
             /** @var \Domain\Entities\Book $book */
             $book = $entity;
-
             $sql = "INSERT INTO book (name, description, author) VALUES (:name, :description, :author)";
 
             $pdo = $this->em->getConnection()->prepare($sql);
@@ -42,6 +41,9 @@ class BooksRepository extends AbstractRepository implements BooksRepositoryInter
 
             $pdo->execute();
 
+            $book->id = $this->em->getConnection()->lastInsertId();
+
+            return $book;
         } catch (\PDOException $e) {
             echo $e->getMessage();
         }
