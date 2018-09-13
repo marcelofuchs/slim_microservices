@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Authenticator\Http\v1\Controllers;
+namespace Application\Authenticator\Http\Actions;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -9,9 +9,9 @@ use Firebase\JWT\JWT;
 /**
  * Auth Controller
  * 
- * @package Application\Authenticator\Http\v1\Controllers
+ * @package Application\Authenticator\Http\Controllers
  */
-class AuthController {
+class Auth {
 
     /** @var object  */
     protected $container;

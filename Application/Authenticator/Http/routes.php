@@ -9,6 +9,6 @@ $app->group('/v1', function() {
      * Dentro de v1, o recurso /auth
      */
     $this->group('/auth', function() {
-        $this->get('', \Application\Authenticator\Http\v1\Controllers\AuthController::class);
+        $this->get('', \Application\Authenticator\Http\Actions\Auth::class);
     });
 });

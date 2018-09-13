@@ -2,12 +2,10 @@
 
 namespace Application\Books\Http\v1\Actions;
 
-use Infrastructure\Container\ServiceBus\CommandBusInterface;
-use Interop\Container\ContainerInterface;
-use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Domain\Contracts\Services\BooksServiceInterface;
 use \Domain\Abstractions\AbstractAction;
+use Slim\Http\Request;
 
 /**
  * Action List
@@ -22,10 +20,11 @@ class BookList extends AbstractAction
      * @param [type] $args
      * @return Response
      */
-    public function __invoke(Request $request, Response $response, $args = [])
+    public function process(Request $request, Response $response, $args = [])
     {
-        print_r('sdfsdfsdf ff');exit;
-        $books = $this->service->findAll();
+        $booksService = $this->container->get(BooksServiceInterface::class);
+        $books = $booksService->findAll();
+
         return $response->withJson($books, 200)->withHeader('Content-type', 'application/json');
     }
 }

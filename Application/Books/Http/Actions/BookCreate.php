@@ -2,33 +2,16 @@
 
 namespace Application\Books\Http\v1\Actions;
 
+use Application\Books\Contracts\Commands\BookCreateInterface;
 use Domain\Abstractions\AbstractAction;
-use Domain\Contracts\Services\BooksServiceInterface;
 use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Http\Request;
 
 /**
  * Action Create
  */
 class BookCreate extends AbstractAction
 {
-
-    /**
-     * Container Class
-     *
-     * @var \Domain\Contracts\Services\BaseServiceInterface
-     */
-    private $service;
-
-    /**
-     * @inheritdoc
-     */
-    public function __construct($container)
-    {
-        parent::__construct($container);
-        $this->service = $this->container->get(BooksServiceInterface::class);
-    }
-
     /**
      * Invoke
      *
@@ -37,26 +20,28 @@ class BookCreate extends AbstractAction
      * @param array $args
      * @return mixed
      */
-    public function __invoke(Request $request, Response $response, $args = [])
+    public function process(Request $request, Response $response, $args = [])
     {
-
         $data = json_decode($request->getBody()->getContents(), true);
-        $entity = new \Domain\Entities\Book();
-        $entity->setAuthor($data['author']);
-        $entity->setName($data['name']);
-        $entity->setDescription($data['description']);
-        $books = $this->service->save($entity);
-
-        return $response->withJson($books, 200)->withHeader('Content-type', 'application/json');
-
-//        $command = \Repurchase\Application\Command\NewRepurchase::fromArray($data);
-//        $this->commandBus->dispatch($command);
+//        $entity = new \Domain\Entities\Book();
+//        $entity->setAuthor($data['author']);
+//        $entity->setName($data['name']);
+//        $entity->setDescription($data['description']);
+//        $books = $this->service->save($entity);
 //
-//        return new JsonResponse([
-//            'id' => $command->getRepurchaseId(),
-//            'orderId' => $command->getPortalOrderId(),
-//            'success' => (!empty($command->getRepurchaseId()))
-//        ], 202);
+//        return $response->withJson($books, 200)->withHeader('Content-type', 'application/json');
+
+        print_r($data);
+        /** @var BookCreateInterface $command */
+        $command = $this->container->get(BookCreateInterface::class);
+        
+        $this->commandBus->dispatch($command);
+
+        return new JsonResponse([
+            'id' => $command->getRepurchaseId(),
+            'orderId' => $command->getPortalOrderId(),
+            'success' => (!empty($command->getRepurchaseId()))
+        ], 202);
     }
 
 //    /**
