@@ -62,6 +62,7 @@ class CommandBusSupportingMiddleware implements CommandBusInterface
      */
     public function dispatch(CommandInterface $message)
     {
+        print_r($message);exit;
         call_user_func($this->callableForNextMiddleware(0), $message);
     }
 
@@ -71,6 +72,7 @@ class CommandBusSupportingMiddleware implements CommandBusInterface
      */
     private function callableForNextMiddleware($index)
     {
+        print_r($this->middlewares);
         if (!isset($this->middlewares[$index])) {
             return function () {
             };

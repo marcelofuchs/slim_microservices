@@ -2,8 +2,8 @@
 
 namespace Infrastructure\Container\ServiceBus\CommandBus;
 
-//use MMLabs\Core\ServiceBus\Command\CommandInterface;
-//use MMLabs\Core\ServiceBus\CommandBusInterface;
+use Infrastructure\Container\ServiceBus\Command\CommandInterface;
+use Infrastructure\Container\ServiceBus\CommandBusInterface;
 
 /**
  * Trait InjectCommandBusTrait

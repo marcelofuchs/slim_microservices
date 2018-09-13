@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Books\Http\v1\Actions;
+namespace Application\Books\Http\Actions;
 
 use \Psr\Http\Message\ResponseInterface as Response;
 use \Domain\Contracts\Services\BooksServiceInterface;

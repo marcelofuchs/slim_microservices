@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Books\Http\v1\Actions;
+namespace Application\Books\Http\Actions;
 
 use Domain\Abstractions\AbstractAction;
 use Slim\Http\Request;

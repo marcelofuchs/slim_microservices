@@ -15,11 +15,13 @@ interface CommandInterface
      * Factory para criar command a partir de array
      *
      * @param array $data
+     * @return CommandInterface
      */
     public static function fromArray(array $data);
 
     /**
      * Serializa os parametros do command
+     *
      * @return array
      */
     public function toArray(): array;

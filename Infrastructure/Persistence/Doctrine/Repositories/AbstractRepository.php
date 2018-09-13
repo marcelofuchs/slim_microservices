@@ -152,7 +152,12 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
 
     /**
      * Parse Order By
-     * 
+     *
+     * [
+     *      'nome' => 'desc',
+     *      'descricao' => 'asc'
+     * ]
+     *
      * @param array $orderby
      * @param QueryBuilder $queryBuilder
      * @return type
