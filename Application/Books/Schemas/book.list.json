@@ -1,0 +1,38 @@
+{
+  "type":"object",
+  "properties":{
+    "order":{
+      "type":"object",
+      "properties":{
+        "id":{
+          "type":"string"
+        }
+      },
+      "required":[
+        "id"
+      ],
+      "additionalProperties":false
+    },
+    "paginate":{
+      "type":"object",
+      "properties":{
+        "limit":{
+          "type":"integer",
+          "minimum": 3,
+          "maximum": 7
+        },
+        "offset":{
+          "type":"integer"
+        }
+      },
+      "required":[
+        "limit", "offset"
+      ],
+      "additionalProperties":false
+    }
+  },
+  "required":[
+    "order"
+  ],
+  "additionalProperties":false
+}
