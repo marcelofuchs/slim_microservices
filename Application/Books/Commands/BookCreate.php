@@ -61,7 +61,7 @@ class BookCreate implements BookCreateInterface
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function getName()
     {
@@ -69,8 +69,7 @@ class BookCreate implements BookCreateInterface
     }
 
     /**
-     * @param mixed $name
-     * @return BookCreate
+     * @inheritdoc
      */
     public function setName($name)
     {
@@ -79,7 +78,7 @@ class BookCreate implements BookCreateInterface
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function getDescription()
     {
@@ -87,8 +86,7 @@ class BookCreate implements BookCreateInterface
     }
 
     /**
-     * @param mixed $description
-     * @return BookCreate
+     * @inheritdoc
      */
     public function setDescription($description)
     {
@@ -97,7 +95,7 @@ class BookCreate implements BookCreateInterface
     }
 
     /**
-     * @return mixed
+     * @inheritdoc
      */
     public function getAuthor()
     {
@@ -105,8 +103,7 @@ class BookCreate implements BookCreateInterface
     }
 
     /**
-     * @param mixed $author
-     * @return BookCreate
+     * @inheritdoc
      */
     public function setAuthor($author)
     {

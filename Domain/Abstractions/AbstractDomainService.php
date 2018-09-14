@@ -127,10 +127,7 @@ abstract class AbstractDomainService implements BaseServiceInterface
      * @param $entity
      * @return mixed
      */
-    public function save(CommandInterface $entity)
-    {
-        return $this->repository->save($entity);
-    }
+    abstract public function save(CommandInterface $entity);
 
     /**
      * @param $entityId
