@@ -30,7 +30,7 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      *
      * @var array
      */
-    protected $defaultSort = [];
+    protected $defaultSort = ["id"];
 
     public function __construct($em)
     {
@@ -63,8 +63,49 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      * @param array $criteria
      * @param QueryBuilder $queryBuilder
      */
-    protected function parseCriteria(array $criteria, QueryBuilder $queryBuilder)
-    {
+    protected function parseCriteria(array $criteria, $operator = "AND") {
+        $condition = [];
+        foreach ($criteria as $field => $value) {
+            if ($field === '_search') {
+                    $condition[] = "(".$this->parseCriteria($value, "OR").")";
+                continue;
+            }
+
+            if ($field === '_isNot') {
+                foreach ($value as $_searchField => $_searchValue) {
+                    $condition[] = "($_searchField != \"$_searchValue\")";
+                }
+                continue;
+            }
+
+            if ($field === '_between') {
+                foreach ($value as $_searchField => $_searchValue) {
+                    list($_valueIni, $_valueEnd) = $_searchValue;
+                    $condition[] = "($_searchField BETWEEN \"$_valueIni\" AND \"$_valueEnd\")";
+                }
+                continue;
+            }
+
+            switch (gettype($value)) {
+                case 'string':
+                    if (strpos($value, '%') !== false) {
+                        $condition[] = "($field LIKE \"$value\"";
+                        break;
+                    }
+
+                    $condition[] = "($field = \"$value\")";
+                    break;
+            }
+
+            if (!$condition) {
+                continue;
+            }
+
+        }
+
+        return (!empty($condition)
+                ? "WHERE ".implode($condition, " ".$operator." ")
+                : implode($condition, " ".$operator." "));
     }
 
     /**
@@ -74,8 +115,47 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      * @param QueryBuilder $queryBuilder
      * @return type
      */
-    protected function parseOrderBy(array $orderby = null, QueryBuilder $queryBuilder)
+    protected function parseOrderBy(array $orderby = null) :string
     {
+        if (!$orderby) {
+            return "";
+        }
+
+        $order = [];
+
+        foreach ($orderby as $field => $direction) {
+            $order[] = "$field $direction";
+        }
+
+        return "ORDER BY ".implode(", ", $order);
+    }
+
+    /**
+     * Parse Limit
+     *
+     * @param int $limit
+     */
+    protected function parseLimit($limit) :string
+    {
+        if (!$limit) {
+            return "";
+        }
+
+        return "LIMIT $limit";
+    }
+
+    /**
+     * Parse Offset
+     *
+     * @param int $offset
+     */
+    protected function parseOffset($offset) :string
+    {
+        if (!$offset) {
+            return "";
+        }
+
+        return "OFFSET $offset";
     }
 
     /**
@@ -127,6 +207,20 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
+        $sql = "SELECT * FROM ".$this->getTableName().
+               " ".$this->parseCriteria($criteria).
+               " ".$this->parseOrderBy($orderBy).
+               " ".$this->parseLimit($limit).
+               " ".$this->parseOffset($offset);
+
+
+        echo $sql;
+        exit;
+
+        $pdo = $this->em->getConnection()->prepare($sql);
+        $pdo->execute();
+
+        return $pdo->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     /**
@@ -160,6 +254,12 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      */
     public function count(array $criteria): int
     {
+        $sql = "SELECT COUNT(*) total FROM ".$this->getTableName();
+
+        $pdo = $this->em->getConnection()->prepare($sql);
+        $pdo->execute();
+
+        return $pdo->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function save(EntityInterface $entity)

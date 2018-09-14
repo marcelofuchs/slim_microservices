@@ -28,11 +28,14 @@ class BooksRepository extends AbstractRepository implements BooksRepositoryInter
 
     public function save(EntityInterface $entity)
     {
-        try {
-            /** @var \Domain\Entities\Book $book */
-            $book = $entity;
-            $sql = "INSERT INTO book (name, description, author) VALUES (:name, :description, :author)";
+        /** @var \Domain\Entities\Book $book */
+        $book = $entity;
 
+        $sql = ($book->id)
+                ?"UPDATE book SET name = :name, description = :description, author = :author"
+                :"INSERT INTO book (name, description, author) VALUES (:name, :description, :author)";
+
+        try {
             $pdo = $this->em->getConnection()->prepare($sql);
 
             $pdo->bindValue(":name", $book->getName());
@@ -48,4 +51,6 @@ class BooksRepository extends AbstractRepository implements BooksRepositoryInter
             echo $e->getMessage();
         }
     }
+
+
 }
