@@ -29,8 +29,6 @@ final class CommandBusFactory
     public function __invoke()
     {
         $handlers           = $this->container->get('command_bus')['handlers'];
-        print_r($handlers);exit;
-        $handlers           = [];
         $broadwayCommandBus = new BroadwayCommandBus(new SimpleCommandBus());
         $services           = [];
 

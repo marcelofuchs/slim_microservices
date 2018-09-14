@@ -5,8 +5,13 @@ declare(strict_types=1);
 namespace Infrastructure\Container\ServiceBus;
 
 use Broadway\CommandHandling\CommandHandler;
-//use MMLabs\Core\ServiceBus\Command\CommandHandlerInterface;
+use Infrastructure\Container\ServiceBus\Command\CommandHandlerInterface;
 
+/**
+ * Class SimpleCommandHandler
+ *
+ * @package Infrastructure\Container\ServiceBus
+ */
 abstract class SimpleCommandHandler implements CommandHandlerInterface, CommandHandler
 {
     /**
@@ -23,6 +28,10 @@ abstract class SimpleCommandHandler implements CommandHandlerInterface, CommandH
         $this->$method($command);
     }
 
+    /**
+     * @param $command
+     * @return string
+     */
     private function getHandleMethod($command)
     {
         if (! is_object($command)) {

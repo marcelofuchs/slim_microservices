@@ -3,6 +3,7 @@
 namespace Domain\Abstractions;
 
 use \Domain\Contracts\Services\BaseServiceInterface;
+use Infrastructure\Container\ServiceBus\Command\CommandInterface;
 
 /**
  * Class AbstractDomainService
@@ -126,7 +127,7 @@ abstract class AbstractDomainService implements BaseServiceInterface
      * @param $entity
      * @return mixed
      */
-    public function save($entity)
+    public function save(CommandInterface $entity)
     {
         return $this->repository->save($entity);
     }
@@ -147,7 +148,7 @@ abstract class AbstractDomainService implements BaseServiceInterface
      * @param $post
      * @return mixed
      */
-    public function updateEntity($entity, $post)
+    public function updateEntity(CommandInterface $entity, $post)
     {
         return $this->repository->update($entity, $post);
     }

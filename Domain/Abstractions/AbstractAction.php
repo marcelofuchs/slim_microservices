@@ -24,6 +24,7 @@ abstract class AbstractAction implements BaseActionInterface
 
     /**
      * Class Constructor
+     *
      * @param ContainerInterface $container
      * @param CommandBusInterface $commandBus
      */

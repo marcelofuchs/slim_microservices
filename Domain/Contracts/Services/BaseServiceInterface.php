@@ -2,6 +2,8 @@
 
 namespace Domain\Contracts\Services;
 
+use Infrastructure\Container\ServiceBus\Command\CommandInterface;
+
 /**
  * Interface BaseServiceInterface
  *
@@ -71,7 +73,7 @@ interface BaseServiceInterface {
      * @param $entity
      * @return mixed
      */
-    public function save($entity);
+    public function save(CommandInterface $entity);
 
     /**
      * @param $entityId
@@ -85,7 +87,7 @@ interface BaseServiceInterface {
      * @param $post
      * @return mixed
      */
-    public function updateEntity($entity, $post);
+    public function updateEntity(CommandInterface $entity, $post);
 
     /**
      * @param $entityId

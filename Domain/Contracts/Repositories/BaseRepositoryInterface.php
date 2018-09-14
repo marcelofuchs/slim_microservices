@@ -88,4 +88,12 @@ interface BaseRepositoryInterface {
      * @return int
      */
     public function count(array $criteria): int;
+
+    /**
+     * Retorna a entity que representa o repositorio
+     *
+     * @return EntityInterface
+     */
+    public function getEntity():EntityInterface;
+
 }
