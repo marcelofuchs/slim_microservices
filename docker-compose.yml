@@ -57,6 +57,7 @@ services:
 #            - ./environment/php-fpm/.composer/cache:/.composer/cache
         ports:
             - "9000:9000"
+            - "9001:9001" #xdebug
         links:
             - db
             - redis

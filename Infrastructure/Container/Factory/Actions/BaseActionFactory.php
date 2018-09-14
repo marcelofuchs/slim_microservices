@@ -3,10 +3,10 @@
 namespace Infrastructure\Container\Factory\Actions;
 
 use Assert\Assertion;
-use Domain\Abstractions\AbstractAction;
 use Infrastructure\Container\ServiceBus\CommandBusInterface;
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 /**
  * Class BaseActionFactory
@@ -46,13 +46,9 @@ class BaseActionFactory
      * @return mixed
      * @throws \Assert\AssertionFailedException
      */
-    public function __invoke(ServerRequestInterface $request, $requestedService)
+    public function __invoke(Request $request, Response $response, $args = [])
     {
-
-      //  print_r($request);
-       // exit;
-        //Assertion::classExists($requestedService);
-
-        return new $this->action($this->container->get(CommandBusInterface::NAME));
+        $action = new $this->action($this->container, $this->container->get(CommandBusInterface::class));
+        return $action->process($request, $response, $args);
     }
 }

@@ -14,17 +14,28 @@ use Infrastructure\Container\ServiceBus\CommandBus\CommandBusSupportingMiddlewar
 use Infrastructure\Container\ServiceBus\CommandBus\InjectCommandBusTrait;
 use Infrastructure\Container\ServiceBus\EventBusInterface;
 use Interop\Container\ContainerInterface;
+use Slim\Container;
 
 final class CommandBusFactory
 {
-    public function __invoke(ContainerInterface $container)
+    /** @var Container */
+    protected $container;
+
+    public function __construct($container)
     {
-        $handlers           = $container->get('config')['command_bus']['handlers'];
+        $this->container =  $container;
+    }
+
+    public function __invoke()
+    {
+        $handlers           = $this->container->get('command_bus')['handlers'];
+        print_r($handlers);exit;
+        $handlers           = [];
         $broadwayCommandBus = new BroadwayCommandBus(new SimpleCommandBus());
         $services           = [];
 
         foreach ($handlers as $handlerService) {
-            array_push($services, $container->get($handlerService));
+            array_push($services, $this->container->get($handlerService));
         }
 
         foreach ($services as $service) {
@@ -32,9 +43,9 @@ final class CommandBusFactory
         }
 
         $commandBusMiddleware = new CommandBusSupportingMiddleware();
-        $commandBusMiddleware->appendMiddleware(new LogCommandsMiddleware($container->get('logger')));
+        $commandBusMiddleware->appendMiddleware(new LogCommandsMiddleware($this->container->get('logger')));
        /* $commandBusMiddleware->appendMiddleware(new TransactionalMiddleware(
-            $container->get('doctrine.entity_manager.orm_default')
+            $this->container->get('doctrine.entity_manager.orm_default')
         ));*/
         $commandBusMiddleware->appendMiddleware(new BroadwayCommandBusMiddleware($broadwayCommandBus));
 
@@ -56,7 +67,7 @@ final class CommandBusFactory
                     continue;
                 }
 
-                $service->setEventBus($container->get(EventBusInterface::NAME));
+                $service->setEventBus($this->container->get(EventBusInterface::NAME));
             }
         }
 

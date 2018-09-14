@@ -12,7 +12,7 @@
             generator:
                 strategy: SEQUENCE
             sequenceGenerator:
-                sequenceName: 'book_seq'
+                sequenceName: 'book_id_seq'
                 allocationSize: 1
                 initialValue: 1
     fields:
