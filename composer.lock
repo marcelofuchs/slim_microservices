@@ -4,19 +4,19 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eb694b24a7b0480b542f5f703b4207b9",
+    "content-hash": "3d40672f99a2a0e415590dd17705791c",
     "packages": [
         {
             "name": "akrabat/rka-scheme-and-host-detection-middleware",
             "version": "0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/akrabat/rka-scheme-and-host-detection-middleware.git",
+                "url": "https://github.com/akrabat/proxy-detection-middleware.git",
                 "reference": "5b5e9668d3291ffeafe487ffc00b5344b945a369"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akrabat/rka-scheme-and-host-detection-middleware/zipball/5b5e9668d3291ffeafe487ffc00b5344b945a369",
+                "url": "https://api.github.com/repos/akrabat/proxy-detection-middleware/zipball/5b5e9668d3291ffeafe487ffc00b5344b945a369",
                 "reference": "5b5e9668d3291ffeafe487ffc00b5344b945a369",
                 "shasum": ""
             },
@@ -52,6 +52,7 @@
                 "middleware",
                 "psr7"
             ],
+            "abandoned": "akrabat/proxy-detection-middleware",
             "time": "2016-11-13T11:55:26+00:00"
         },
         {
@@ -1199,6 +1200,66 @@
                 "orm"
             ],
             "time": "2018-04-01T11:51:37+00:00"
+        },
+        {
+            "name": "league/json-guard",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/json-guard.git",
+                "reference": "596059d2c013bcea1a8a1386bd0e60d32ef39eb9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/json-guard/zipball/596059d2c013bcea1a8a1386bd0e60d32ef39eb9",
+                "reference": "596059d2c013bcea1a8a1386bd0e60d32ef39eb9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=5.6.0",
+                "psr/container": "^1.0"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "json-schema/json-schema-test-suite": "1.2.0",
+                "league/json-reference": "1.0.0",
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\JsonGuard\\": "src"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthew Allan",
+                    "email": "matthew.james.allan@gmail.com",
+                    "homepage": "https://mattallan.org",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A validator for JSON using json-schema.",
+            "homepage": "https://github.com/thephpleague/json-guard",
+            "keywords": [
+                "json",
+                "json-schema",
+                "json-schema.org",
+                "schema",
+                "validation"
+            ],
+            "abandoned": true,
+            "time": "2017-05-03T21:12:30+00:00"
         },
         {
             "name": "monolog/monolog",
