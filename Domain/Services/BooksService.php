@@ -2,13 +2,40 @@
 
 namespace Domain\Services;
 
+use Application\Books\Contracts\Commands\BookCreateInterface;
 use Domain\Abstractions\AbstractDomainService;
 use Domain\Contracts\Services\BooksServiceInterface;
+use Domain\Entities\Book;
+use Infrastructure\Container\ServiceBus\Command\CommandInterface;
 
+/**
+ * Class BooksService
+ * @package Domain\Services
+ */
 class BooksService extends AbstractDomainService implements BooksServiceInterface
 {
-    public function __construct($repositoryContract)
+    /**
+     * @param CommandInterface $bookCommand
+     *
+     * @return mixed
+     */
+    public function save(CommandInterface $bookCommand)
     {
-        parent::__construct($repositoryContract);
-    }   
+        /** @var BookCreateInterface $command */
+        $command = $bookCommand;
+        $id = null;
+
+        $book = new Book(
+            $id,
+            $command->getName(),
+            $command->getDescription(),
+            $command->getAuthor()
+        );
+
+        $this->repository->save($book);
+
+        $this->eventBus->publish($book->getUncommittedEvents());
+
+        $bookCommand->id = $book->getId();
+    }
 }

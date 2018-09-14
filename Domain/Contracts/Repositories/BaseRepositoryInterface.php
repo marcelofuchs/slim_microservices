@@ -2,9 +2,12 @@
 
 namespace Domain\Contracts\Repositories;
 
-use Domain\Contracts\Entities\EntityInterface;
-
-interface BaseRepositoryInterface {
+/**
+ * Interface BaseRepositoryInterface
+ * @package Domain\Contracts\Repositories
+ */
+interface BaseRepositoryInterface
+{
 
     /**
      * Retorna a contagem total da última consulta realizada, se for
@@ -14,12 +17,12 @@ interface BaseRepositoryInterface {
      * @return int|null
      */
     public function countLastQuery();
-    
+
     /**
      * Create Query Builder
-     * 
+     *
      * Prepara a consulta de acordo com parametros informados, como criterias.
-     * 
+     *
      * @param type $alias
      * @param type $indexBy
      */
@@ -36,10 +39,10 @@ interface BaseRepositoryInterface {
      * @return
      */
     public function find(int $id, $lockMode = null, $lockVersion = null);
-    
+
     /**
      * Find All
-     * 
+     *
      * Encontra todos or registros, deve levar em conta as condicoes obrigatórias de criterio.
      */
     public function findAll();
@@ -57,15 +60,15 @@ interface BaseRepositoryInterface {
 
     /**
      * Find One By
-     * 
+     *
      * @param array $criteria
      * @param array $orderBy
      */
     public function findOneBy(array $criteria, array $orderBy = null);
-    
+
     /**
      * Transactional
-     * 
+     *
      * @param \Closure $handler
      */
     public function transactional(\Closure $handler);
@@ -83,17 +86,10 @@ interface BaseRepositoryInterface {
 
     /**
      * Count
-     * 
+     *
      * @param array $criteria
      * @return int
      */
     public function count(array $criteria): int;
-
-    /**
-     * Retorna a entity que representa o repositorio
-     *
-     * @return EntityInterface
-     */
-    public function getEntity():EntityInterface;
 
 }

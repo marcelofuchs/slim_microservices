@@ -2,7 +2,7 @@
 
 namespace Infrastructure\Container\EventBus;
 
-//use MMLabs\Core\ServiceBus\EventBusInterface;
+use Infrastructure\Container\ServiceBus\EventBusInterface;
 
 trait InjectEventBusTrait
 {

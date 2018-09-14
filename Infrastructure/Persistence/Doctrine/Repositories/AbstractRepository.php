@@ -304,11 +304,11 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
     
-    public function save(EntityInterface $repurchase)
+    public function save(EntityInterface $entity)
     {
-        $this->getEntityManager()->persist($repurchase);
+        $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
-        return $repurchase;
+        return $entity;
     }
 
     /**
