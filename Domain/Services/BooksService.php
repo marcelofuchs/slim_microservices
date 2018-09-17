@@ -34,8 +34,8 @@ class BooksService extends AbstractDomainService implements BooksServiceInterfac
 
         $this->repository->save($book);
 
-        $this->eventBus->publish($book->getUncommittedEvents());
-
         $bookCommand->id = $book->getId();
+
+        return $bookCommand;
     }
 }
