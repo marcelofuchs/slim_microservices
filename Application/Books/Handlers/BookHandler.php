@@ -34,7 +34,7 @@ final class BookHandler extends SimpleCommandHandler implements BookHandlerInter
      */
     public function handleBookCreate(BookCreateInterface $command)
     {
-        $this->service->save($command);
+        return $this->service->save($command);
     }
 
     /**
@@ -44,6 +44,6 @@ final class BookHandler extends SimpleCommandHandler implements BookHandlerInter
     {
         print_r('delete');
         exit;
-        $this->service->delete($command);
+        return $this->service->delete($command);
     }
 }

@@ -14,6 +14,11 @@ class BookCreate implements BookCreateInterface
     /**
      * @var string
      */
+    public $id = null;
+
+    /**
+     * @var string
+     */
     private $name;
 
     /**
@@ -54,6 +59,7 @@ class BookCreate implements BookCreateInterface
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
             'author' => $this->author

@@ -8,11 +8,12 @@ services:
             - ".env"
         restart: always
         volumes:
-            - ./environment/postgres/data:/var/lib/postgresql/data
+#            - ./environment/postgres/data:/var/lib/postgresql/data
+            - ~/microERP/postgres/data:/var/lib/postgresql/data #alterado para evidar perder dados já instalados
         environment:
-            POSTGRES_USER: home_crm
-            POSTGRES_PASSWORD: home_crm
-            POSTGRES_DB: home_crm
+            POSTGRES_USER: home_erp
+            POSTGRES_PASSWORD: home_erp
+            POSTGRES_DB: home_erp
         ports:
             - "5432:5432"
 
@@ -40,7 +41,8 @@ services:
             - ".env"
         restart: always
         volumes:
-            - ./environment/redis/data:/data
+#            - ./environment/redis/data:/data
+            - ~/microERP/redis/data:/data #alterado para evidar perder dados já instalados
             - ./environment/redis/redis.conf:/usr/local/etc/redis/redis.conf
         ports:
             - "6379:6379"
@@ -57,13 +59,13 @@ services:
 #            - ./environment/php-fpm/.composer/cache:/.composer/cache
         ports:
             - "9000:9000"
-            - "9001:9001" #xdebug
+#            - "9001:9001" #xdebug
         links:
             - db
             - redis
 
-    web_crm_auth:
-        container_name: web_crm_auth
+    web_erp_auth:
+        container_name: web_erp_auth
 #        user: "${USER}:${GROUP}"
         build: ./environment/nginx
         env_file:
@@ -73,7 +75,7 @@ services:
             - ./environment/nginx/app.auth.vhost:/etc/nginx/conf.d/app.vhost
             #DESCOMENTAR CASO QUEIRA CUSTOMIZAR O OPCACHE DO PHP
             #- ./php-fpm/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
-            - ./environment/logs/nginx:/var/log/nginx
+            - ~/microERP/logs/auth/nginx:/var/log/nginx
             - ../:/var/www/html
         ports:
             - "8080:80"
@@ -81,8 +83,8 @@ services:
         links:
             - php_fpm
 
-    web_crm_books:
-        container_name: web_crm_books
+    web_erp_books:
+        container_name: web_erp_books
 #        user: "${USER}:${GROUP}"
         build: ./environment/nginx
         env_file:
@@ -92,7 +94,7 @@ services:
             - ./environment/nginx/app.books.vhost:/etc/nginx/conf.d/app.vhost
             #DESCOMENTAR CASO QUEIRA CUSTOMIZAR O OPCACHE DO PHP
             #- ./php-fpm/opcache.ini:/usr/local/etc/php/conf.d/docker-php-ext-opcache.ini
-            - ./environment/logs/nginx:/var/log/nginx
+            - ~/microERP/logs/books/nginx:/var/log/nginx
             - ../:/var/www/html
         ports:
             - "8081:80"
