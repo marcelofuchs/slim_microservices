@@ -93,7 +93,7 @@ interface BaseServiceInterface {
      * @param $entityId
      * @return mixed
      */
-    public function delete($entityId);
+    public function delete($id);
 
     /**
      * @param $parameter

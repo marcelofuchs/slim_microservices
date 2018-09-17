@@ -268,9 +268,13 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
 
     public function delete($id, $lockMode = null, $lockVersion = null)
     {
-        $sql = "DELETE FROM ".$this->getTableName()." WHERE ".$this->getPrimaryId()." = ".$id;
+        $table =  $this->getTableName();
+        $primaryId = $this->getPrimaryId();
+
+        $sql = "DELETE FROM ".$table." WHERE ".$primaryId." = ".$id;
 
         $pdo = $this->em->getConnection()->prepare($sql);
+
         $pdo->execute();
 
         return ($pdo)? true : false;

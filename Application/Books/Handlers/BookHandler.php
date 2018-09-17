@@ -6,6 +6,7 @@ namespace Application\Books\Handlers;
 
 use Application\Books\Contracts\Commands\BookCreateInterface;
 use Application\Books\Contracts\Commands\BookUpdateInterface;
+use Application\Books\Contracts\Commands\BookDeleteInterface;
 use Application\Books\Contracts\Handlers\BookHandlerInterface;
 use Application\Books\Http\Actions\BookUpdate;
 use Domain\Contracts\Services\BooksServiceInterface;
@@ -50,10 +51,8 @@ final class BookHandler extends SimpleCommandHandler implements BookHandlerInter
     /**
      * @param BookCreateInterface $command
      */
-    public function handleBookDelete(BookCreateInterface $command)
+    public function handleBookDelete(BookDeleteInterface $command)
     {
-        print_r('delete');
-        exit;
-        return $this->service->delete($command);
+        return $this->service->delete($command->id);
     }
 }
