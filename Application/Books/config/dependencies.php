@@ -5,11 +5,13 @@ $container[\Application\Books\Http\Actions\BookCreate::class] = function ($conta
     return new \Infrastructure\Container\Factory\Actions\BaseActionFactory($container, \Application\Books\Http\Actions\BookCreate::class);
 };
 
+$container[\Application\Books\Http\Actions\BookOne::class] = function ($container) {
+    return new \Infrastructure\Container\Factory\Actions\BaseActionFactory($container, \Application\Books\Http\Actions\BookOne::class);
+};
+
 $container[\Application\Books\Http\Actions\BookList::class] = function ($container) {
     return new \Infrastructure\Container\Factory\Actions\BaseActionFactory($container, \Application\Books\Http\Actions\BookList::class);
 };
-
-
 
 //COMMANDS - É CHAMADO TANTO PELO HTTP QUANTO PELO CONSOLE PARA PREPARAR UMA INFORMAÇÃO PARA O HANDLER
 $container[\Application\Books\Contracts\Commands\BookCreateInterface::class] = \Application\Books\Commands\BookCreate::class;
