@@ -7,6 +7,7 @@ use Domain\Abstractions\AbstractDomainService;
 use Domain\Contracts\Services\BooksServiceInterface;
 use Domain\Entities\Book;
 use Infrastructure\Container\ServiceBus\Command\CommandInterface;
+use Slim\Exception\NotFoundException;
 
 /**
  * Class BooksService
@@ -34,5 +35,31 @@ class BooksService extends AbstractDomainService implements BooksServiceInterfac
 
         $this->repository->save($book);
         $bookCommand->id = $book->getId();
+    }
+
+    /**
+     * @param CommandInterface $bookCommand
+     *
+     * @return mixed
+     */
+    public function update(CommandInterface $bookCommand)
+    {
+        /** @var BookCreateInterface $command */
+        $command = $bookCommand;
+
+        $book = $this->repository->find($command->id);
+
+        if(!$book){
+            throw new \Exception("Book not found.", 404);
+        }
+
+        $book = new Book(
+            $command->id,
+            $command->getName(),
+            $command->getDescription(),
+            $command->getAuthor()
+        );
+
+        $this->repository->save($book);
     }
 }

@@ -80,7 +80,7 @@ interface BaseServiceInterface {
      * @param $post
      * @return mixed
      */
-    public function update($entityId, $post);
+    public function update(CommandInterface $entity);
 
     /**
      * @param $entity

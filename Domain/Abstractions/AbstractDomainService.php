@@ -134,11 +134,7 @@ abstract class AbstractDomainService implements BaseServiceInterface
      * @param $post
      * @return mixed
      */
-    public function update($entityId, $post)
-    {
-        $entity = $this->find($entityId);
-        return $this->repository->update($entity, $post);
-    }
+    abstract public function update(CommandInterface $entity);
 
     /**
      * @param $entity

@@ -1,5 +1,5 @@
 <?php
-require_once 'dependencies.doctrine.php';
+require_once 'dependencies.pdo.php';
 //require_once 'dependencies.redbean.php';
 
 // DATABASE DEFAULT PRELOAD
