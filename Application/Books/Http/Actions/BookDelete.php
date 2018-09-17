@@ -2,8 +2,8 @@
 
 namespace Application\Books\Http\Actions;
 
+use Application\Books\Contracts\Commands\BookDeleteInterface;
 use \Psr\Http\Message\ResponseInterface as Response;
-use \Domain\Contracts\Services\BooksServiceInterface;
 use \Domain\Abstractions\AbstractAction;
 use Slim\Http\Request;
 
@@ -22,13 +22,12 @@ class BookDelete extends AbstractAction
      */
     public function process(Request $request, Response $response, $args = [])
     {
-        $id = (int)$args['id'];
+        $id['id'] = (int)$args['id'];
 
-        $bookService = $this->container->get(BooksServiceInterface::class);
-        $bookService->delete($id);
+        /** @var BookDeleteInterface $command */
+        $command = $this->container->get(BookDeleteInterface::class)::fromArray($id);
+        $this->commandBus->dispatch($command);
 
-        $return = $response->withJson(['msg' => "Deletando o livro {$id}"], 204)
-            ->withHeader('Content-type', 'application/json');
-        return $return;
+        return $response->withJson("Livro Deletado", 200);
     }
 }

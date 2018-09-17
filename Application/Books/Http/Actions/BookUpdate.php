@@ -2,15 +2,13 @@
 
 namespace Application\Books\Http\Actions;
 
-use Application\Books\Contracts\Commands\BookCreateInterface;
+use Application\Books\Contracts\Commands\BookUpdateInterface;
 use Domain\Abstractions\AbstractAction;
 use Psr\Http\Message\ResponseInterface as Response;
+use \Domain\Contracts\Services\BooksServiceInterface;
 use Slim\Http\Request;
 
-/**
- * Action Create
- */
-class BookCreate extends AbstractAction
+class BookUpdate extends AbstractAction
 {
     /**
      * Invoke
@@ -23,9 +21,10 @@ class BookCreate extends AbstractAction
     public function process(Request $request, Response $response, $args = [])
     {
         $data = json_decode($request->getBody()->getContents(), true);
+        $data['id'] = (int) $args['id'];
 
-        /** @var BookCreateInterface $command */
-        $command = $this->container->get(BookCreateInterface::class)::fromArray($data);
+        /** @var BookUpdateInterface $command */
+        $command = $this->container->get(BookUpdateInterface::class)::fromArray($data);
         $this->commandBus->dispatch($command);
 
         return $response->withJson($command->toArray(), 201);

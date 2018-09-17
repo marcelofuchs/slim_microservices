@@ -80,7 +80,7 @@ interface BaseServiceInterface {
      * @param $post
      * @return mixed
      */
-    public function update($entityId, $post);
+    public function update(CommandInterface $entity);
 
     /**
      * @param $entity
@@ -93,7 +93,7 @@ interface BaseServiceInterface {
      * @param $entityId
      * @return mixed
      */
-    public function delete($entityId);
+    public function delete($id);
 
     /**
      * @param $parameter

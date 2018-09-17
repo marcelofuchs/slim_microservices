@@ -32,7 +32,7 @@ class BooksRepository extends AbstractRepository implements BooksRepositoryInter
         $book = $entity;
 
         $sql = ($book->id)
-                ?"UPDATE book SET name = :name, description = :description, author = :author"
+                ?"UPDATE book SET name = :name, description = :description, author = :author WHERE id = :id"
                 :"INSERT INTO book (name, description, author) VALUES (:name, :description, :author)";
 
         try {
@@ -41,10 +41,15 @@ class BooksRepository extends AbstractRepository implements BooksRepositoryInter
             $pdo->bindValue(":name", $book->getName());
             $pdo->bindValue(":description", $book->getDescription());
             $pdo->bindValue(":author", $book->getAuthor());
+            if($book->id){
+                $pdo->bindValue(":id", $book->id);
+            }
 
             $pdo->execute();
 
-            $book->id = $this->em->getConnection()->lastInsertId();
+            if(!$book->id){
+                $book->id = $this->em->getConnection()->lastInsertId();
+            }
 
             return $book;
         } catch (\PDOException $e) {
