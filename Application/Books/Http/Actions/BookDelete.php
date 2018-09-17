@@ -27,8 +27,8 @@ class BookDelete extends AbstractAction
         $bookService = $this->container->get(BooksServiceInterface::class);
         $bookService->delete($id);
 
-        $return = $response->withJson(['msg' => "Deletando o livro {$id}"], 204)
-            ->withHeader('Content-type', 'application/json');
+        $return = $response->withJson("", 202)->withHeader('Content-type', 'application/json');
+
         return $return;
     }
 }
