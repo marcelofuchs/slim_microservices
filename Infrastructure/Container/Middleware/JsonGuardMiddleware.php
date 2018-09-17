@@ -24,17 +24,23 @@ class JsonGuardMiddleware extends Middleware
      */
     public function __invoke($request, $response, $next)
     {
+        $errors = [];
         $route = $request->getAttribute('route');
         $rName = $route ? $route->getName() . ".json" : null;
+        $schema = $this->app->getContainer()->get('schemas_path') . DIRECTORY_SEPARATOR . $rName;
 
-        $validator = new Validator(
-            json_decode($request->getQueryParam('q')),
-            json_decode(file_get_contents(
-                $this->app->getContainer()->get('schemas_path') .
-                DIRECTORY_SEPARATOR . $rName))
-        );
+        if (file_exists($schema)) {
+            $validator = new Validator(json_decode($request->getQueryParam('q')),
+                                        json_decode(file_get_contents($schema)));
 
-        return ($validator->passes()) ? $next($request, $response)
-            : $response->withJson($validator->errors(), 200)->withHeader('Content-type', 'application/json');
+            foreach ($validator->errors() as $error) {
+                $errors[] = $error->getMessage();
+            }
+
+            return ($validator->passes()) ? $next($request, $response)
+                : $response->withJson($errors, 400)->withHeader('Content-type', 'application/json');
+        }
+
+        return $next($request, $response);
     }
 }
