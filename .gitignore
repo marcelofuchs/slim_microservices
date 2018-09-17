@@ -5,3 +5,4 @@ environment/logs
 environment/redis/data
 environment/postgres/data
 nbproject
+Application/Books/log
