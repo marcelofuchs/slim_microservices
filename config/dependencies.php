@@ -14,6 +14,11 @@ $container[\Domain\Contracts\Services\BooksServiceInterface::class] = function($
     return new Domain\Services\BooksService($repositoryContract);
 };
 
+$container[\Domain\Contracts\Services\ModuloServiceInterface::class] = function($container) {
+    $repositoryContract = $container->get(\Domain\Contracts\Repositories\ModuloRepositoryInterface::class);
+    return new Domain\Services\ModuloService($repositoryContract);
+};
+
 $container[\Infrastructure\Container\ServiceBus\CommandBusInterface::class] = function($container){
     $factory = new \Infrastructure\Container\Command\CommandBusFactory($container);
     return $factory();
