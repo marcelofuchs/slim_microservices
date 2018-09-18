@@ -21,4 +21,8 @@ Falhas: 0 -  0/segundo
 
  Total de requisições: 4093 -  68.216666666667/segundo 
 Sucesso: 4093 -  68.216666666667/segundo 
+Falhas: 0 -  0/segundo
+
+ Total de requisições: 2420 -  40.333333333333/segundo 
+Sucesso: 2420 -  40.333333333333/segundo 
 Falhas: 0 -  0/segundo 

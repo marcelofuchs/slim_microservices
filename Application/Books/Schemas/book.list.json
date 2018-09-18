@@ -1,38 +1,36 @@
 {
-  "type":"object",
-  "properties":{
-    "order":{
-      "type":"object",
-      "properties":{
-        "name":{
-          "type":"string"
+  "type": "object",
+  "properties": {
+    "order": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
         }
       },
-      "required":[
-        "name"
-      ],
-      "additionalProperties":false
+      "additionalProperties": false
     },
-    "paginate":{
-      "type":"object",
-      "properties":{
-        "limit":{
-          "type":"integer",
-          "minimum": 3,
-          "maximum": 7
+    "paginate": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
         },
-        "offset":{
-          "type":"integer"
+        "offset": {
+          "type": "integer"
         }
       },
-      "required":[
-        "limit", "offset"
+      "required": [
+        "limit",
+        "offset"
       ],
-      "additionalProperties":false
+      "additionalProperties": false
     }
   },
-  "required":[
+  "required": [
     "order"
   ],
-  "additionalProperties":false
+  "additionalProperties": false
 }

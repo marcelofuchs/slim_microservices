@@ -210,18 +210,15 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
     public function findAll() {
         $conn = $this->getEntityManager()
             ->getConnection();
-//        $sql = 'select * from "Book" where '.time().'>0 ';exit;
-//        $stmt = $conn->prepare($sql);
-//        $stmt->execute();
-//        return $stmt->fetchAll();
         
         $queryBuilder = $this->queryBuilder();
         
         $stmt = $conn->prepare($queryBuilder->getQuery()->getSQL());
         $stmt->execute();
+
         return $stmt->fetchAll();
-        
-        //return $queryBuilder->getQuery()->getResult();
+
+        //return $queryBuilder->getQuery()->getArrayResult();
     }
 
     /**
