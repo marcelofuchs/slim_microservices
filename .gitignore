@@ -5,4 +5,6 @@ environment/logs
 environment/redis/data
 environment/postgres/data
 nbproject
+Application/Authenticator/log
 Application/Books/log
+.env
