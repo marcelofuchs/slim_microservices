@@ -1,0 +1,99 @@
+Domain\Entities\Empresa:
+    type: entity
+    table: empresa
+    repositoryClass: Infrastructure\Persistence\Doctrine\Repositories\EmpresasRepository
+    indexes:
+        empresa_em_index:
+            columns:
+                - im
+        empresa_ie_index:
+            columns:
+                - ie
+        empresa_cnae_index:
+            columns:
+                - cnae
+    uniqueConstraints:
+        empresa_id_uindex:
+            columns:
+                - id
+        empresa_cnpj_index:
+            columns:
+                - cnpj
+    id:
+        id:
+            type: string
+            nullable: false
+            length: 40
+            options:
+                fixed: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        razaoSocial:
+            type: string
+            nullable: false
+            length: 40
+            options:
+                fixed: false
+            column: razao_social
+        nomeFantasia:
+            type: string
+            nullable: false
+            length: 40
+            options:
+                fixed: false
+            column: nome_fantasia
+        cnae:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+        cnpj:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+        ie:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+        im:
+            type: string
+            nullable: true
+            length: 20
+            options:
+                fixed: false
+        enquadramentoTributario:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+            column: enquadramento_tributario
+        endereco:
+            type: text
+            nullable: true
+            length: null
+            options:
+                fixed: false
+        telefone:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        email:
+            type: integer
+            nullable: true
+            options:
+                unsigned: false
+        responsavel:
+            type: string
+            nullable: true
+            length: 40
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

@@ -16,14 +16,14 @@ use Slim\Exception\NotFoundException;
 class BooksService extends AbstractDomainService implements BooksServiceInterface
 {
     /**
-     * @param CommandInterface $bookCommand
+     * @param CommandInterface $command
      *
      * @return mixed
      */
-    public function save(CommandInterface $bookCommand)
+    public function save(CommandInterface $command)
     {
         /** @var BookCreateInterface $command */
-        $command = $bookCommand;
+        $command = $command;
         $id = null;
 
         $book = new Book(
@@ -34,18 +34,18 @@ class BooksService extends AbstractDomainService implements BooksServiceInterfac
         );
 
         $this->repository->save($book);
-        $bookCommand->id = $book->getId();
+        $command->id = $book->getId();
     }
 
     /**
-     * @param CommandInterface $bookCommand
+     * @param CommandInterface $command
      *
      * @return mixed
      */
-    public function update(CommandInterface $bookCommand)
+    public function update(CommandInterface $command)
     {
         /** @var BookCreateInterface $command */
-        $command = $bookCommand;
+        $command = $command;
 
         $book = $this->repository->find($command->id);
 

@@ -38,7 +38,7 @@ interface BaseServiceInterface {
      * @param $arrKeyValue
      * @return mixed
      */
-    public function findBy($arrKeyValue);
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
 
     /**
      * @param $arrKeyValue

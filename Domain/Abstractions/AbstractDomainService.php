@@ -3,7 +3,7 @@
 namespace Domain\Abstractions;
 
 use \Domain\Contracts\Services\BaseServiceInterface;
-use Infrastructure\Container\ServiceBus\Command\CommandInterface;
+use \Infrastructure\Container\ServiceBus\Command\CommandInterface;
 
 /**
  * Class AbstractDomainService
@@ -13,7 +13,7 @@ use Infrastructure\Container\ServiceBus\Command\CommandInterface;
 abstract class AbstractDomainService implements BaseServiceInterface
 {
     /**
-     * @var
+     * @var \Infrastructure\Persistence\Doctrine\Repositories\AbstractRepository
      */
     public $repository;
 
@@ -70,16 +70,17 @@ abstract class AbstractDomainService implements BaseServiceInterface
      * @param $arrKeyValue
      * @return mixed
      */
-    public function findBy($arrKeyValue)
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->repository->findBy($arrKeyValue);
+        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
      * @param $arrKeyValue
      * @return mixed
      */
-    public function findAllBy($arrKeyValue)
+    public
+    function findAllBy($arrKeyValue)
     {
         return $this->repository->findAllBy($arrKeyValue);
     }
@@ -88,7 +89,8 @@ abstract class AbstractDomainService implements BaseServiceInterface
      * @param $filter
      * @return mixed
      */
-    public function findAllByFilter($filter)
+    public
+    function findAllByFilter($filter)
     {
         return $this->repository->findAll($filter);
     }
@@ -97,7 +99,8 @@ abstract class AbstractDomainService implements BaseServiceInterface
      * @param $post
      * @return mixed
      */
-    public function loadNew($post)
+    public
+    function loadNew($post)
     {
         return $this->repository->loadNew($post);
     }
@@ -105,7 +108,8 @@ abstract class AbstractDomainService implements BaseServiceInterface
     /**
      * @return mixed
      */
-    public function getEntity()
+    public
+    function getEntity()
     {
         return $this->repository->getEntity();
     }
@@ -114,7 +118,8 @@ abstract class AbstractDomainService implements BaseServiceInterface
      * @param $post
      * @return mixed
      */
-    public function create($post)
+    public
+    function create($post)
     {
         if (!is_object($post)) {
             $post = $this->loadNew($post);

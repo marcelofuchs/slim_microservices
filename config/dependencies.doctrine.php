@@ -11,4 +11,9 @@ $container[\Domain\Contracts\Repositories\BooksRepositoryInterface::class] = fun
     return $em->getRepository(Domain\Entities\Book::class);
 };
 
+$container[\Domain\Contracts\Repositories\EmpresasRepositoryInterface::class] = function($container) {
+    $em = $container->get('em');
+    return $em->getRepository(Domain\Entities\Empresa::class);
+};
+
 return $container;
