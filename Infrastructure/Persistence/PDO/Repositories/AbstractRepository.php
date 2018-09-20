@@ -6,7 +6,12 @@ use Domain\Contracts\Repositories\BaseRepositoryInterface;
 use Domain\Contracts\Entities\EntityInterface;
 use Infrastructure\Persistence\PDO\EntityManager;
 
-abstract class AbstractRepository implements BaseRepositoryInterface {
+/**
+ * Class AbstractRepository
+ * @package Infrastructure\Persistence\PDO\Repositories
+ */
+abstract class AbstractRepository implements BaseRepositoryInterface
+{
 
     /** @var string */
     protected $alias;
@@ -32,6 +37,10 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      */
     protected $defaultSort = ["id"];
 
+    /**
+     * AbstractRepository constructor.
+     * @param $em
+     */
     public function __construct($em)
     {
         $this->em = $em;
@@ -63,17 +72,18 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      * @param array $criteria
      * @param QueryBuilder $queryBuilder
      */
-    protected function parseCriteria(array $criteria, $operator = "AND") {
+    protected function parseCriteria(array $criteria, $operator = "AND")
+    {
         $condition = [];
         foreach ($criteria as $field => $value) {
             if ($field === '_search') {
-                    $condition[] = "(".$this->parseCriteria($value, "OR").")";
+                $condition[] = "(" . $this->parseCriteria($value, "OR") . ")";
                 continue;
             }
 
             if ($field === '_isNot') {
                 foreach ($value as $_searchField => $_searchValue) {
-                    $condition[] = "($_searchField != \"$_searchValue\")";
+                    $condition[] = "($_searchField != '$_searchValue')";
                 }
                 continue;
             }
@@ -81,7 +91,7 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
             if ($field === '_between') {
                 foreach ($value as $_searchField => $_searchValue) {
                     list($_valueIni, $_valueEnd) = $_searchValue;
-                    $condition[] = "($_searchField BETWEEN \"$_valueIni\" AND \"$_valueEnd\")";
+                    $condition[] = "($_searchField BETWEEN '$_valueIni' AND '$_valueEnd')";
                 }
                 continue;
             }
@@ -89,11 +99,11 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
             switch (gettype($value)) {
                 case 'string':
                     if (strpos($value, '%') !== false) {
-                        $condition[] = "($field LIKE \"$value\"";
+                        $condition[] = "($field LIKE '$value')";
                         break;
                     }
 
-                    $condition[] = "($field = \"$value\")";
+                    $condition[] = "($field = '$value')";
                     break;
             }
 
@@ -104,8 +114,8 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
         }
 
         return (!empty($condition)
-                ? "WHERE ".implode($condition, " ".$operator." ")
-                : implode($condition, " ".$operator." "));
+            ? implode($condition, " " . $operator . " ")
+            : "1=1");
     }
 
     /**
@@ -115,7 +125,7 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      * @param QueryBuilder $queryBuilder
      * @return type
      */
-    protected function parseOrderBy(array $orderby = null) :string
+    protected function parseOrderBy(array $orderby = null): string
     {
         if (!$orderby) {
             return "";
@@ -127,15 +137,16 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
             $order[] = "$field $direction";
         }
 
-        return "ORDER BY ".implode(", ", $order);
+        return "ORDER BY " . implode(", ", $order);
     }
 
     /**
      * Parse Limit
      *
      * @param int $limit
+     * @return string
      */
-    protected function parseLimit($limit) :string
+    protected function parseLimit($limit): string
     {
         if (!$limit) {
             return "";
@@ -148,8 +159,9 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      * Parse Offset
      *
      * @param int $offset
+     * @return string
      */
-    protected function parseOffset($offset) :string
+    protected function parseOffset($offset): string
     {
         if (!$offset) {
             return "";
@@ -180,7 +192,7 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      */
     public function find(int $id, $lockMode = null, $lockVersion = null)
     {
-        $sql = "SELECT * FROM ".$this->getTableName()." WHERE ".$this->getPrimaryId()." = :id ";
+        $sql = "SELECT * FROM " . $this->getTableName() . " WHERE " . $this->getPrimaryId() . " = :id ";
 
         $pdo = $this->em->getConnection()->prepare($sql);
         $pdo->bindParam(':id', $id);
@@ -194,7 +206,7 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      */
     public function findAll()
     {
-        $sql = "SELECT * FROM ".$this->getTableName();
+        $sql = "SELECT * FROM " . $this->getTableName();
 
         $pdo = $this->em->getConnection()->prepare($sql);
         $pdo->execute();
@@ -207,16 +219,12 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        $sql = "SELECT * FROM ".$this->getTableName().
-               " ".$this->parseCriteria($criteria).
-               " ".$this->parseOrderBy($orderBy).
-               " ".$this->parseLimit($limit).
-               " ".$this->parseOffset($offset);
-
-
-        echo $sql;
-        exit;
-
+        $sql = "SELECT ".implode(", ",$this->listFields())." FROM " . $this->getTableName() .
+            " WHERE " . $this->parseCriteria($criteria) .
+            " " . $this->parseOrderBy($orderBy) .
+            " " . $this->parseLimit($limit) .
+            " " . $this->parseOffset($offset);
+print_r($sql);exit;
         $pdo = $this->em->getConnection()->prepare($sql);
         $pdo->execute();
 
@@ -254,7 +262,7 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      */
     public function count(array $criteria): int
     {
-        $sql = "SELECT COUNT(*) total FROM ".$this->getTableName();
+        $sql = "SELECT COUNT(*) total FROM " . $this->getTableName();
 
         $pdo = $this->em->getConnection()->prepare($sql);
         $pdo->execute();
@@ -262,22 +270,31 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
         return $pdo->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @param EntityInterface $entity
+     */
     public function save(EntityInterface $entity)
     {
     }
 
+    /**
+     * @param $id
+     * @param null $lockMode
+     * @param null $lockVersion
+     * @return bool
+     */
     public function delete($id, $lockMode = null, $lockVersion = null)
     {
-        $table =  $this->getTableName();
+        $table = $this->getTableName();
         $primaryId = $this->getPrimaryId();
 
-        $sql = "DELETE FROM ".$table." WHERE ".$primaryId." = ".$id;
+        $sql = "DELETE FROM " . $table . " WHERE " . $primaryId . " = " . $id;
 
         $pdo = $this->em->getConnection()->prepare($sql);
 
         $pdo->execute();
 
-        return ($pdo)? true : false;
+        return ($pdo) ? true : false;
     }
 
     /**
@@ -285,10 +302,30 @@ abstract class AbstractRepository implements BaseRepositoryInterface {
      */
     protected function getEntityManager()
     {
+
     }
 
-    protected abstract function getTableName():string;
+    /**
+     * @return string
+     */
+    protected abstract function getTableName(): string;
 
+    /**
+     * @return string
+     */
+    protected abstract function getPrimaryId(): string;
 
-    protected abstract function getPrimaryId():string;
+    /**
+     * List Fields
+     *
+     * Incluir um array com todos os campos que serao retornados na listagem de multiplos registros.
+     * Ex:
+     * return [
+     *          'id',
+     *          'name as nomeCliente'
+     *  ];
+     *
+     * @return array
+     */
+    protected abstract function listFields(): array;
 }

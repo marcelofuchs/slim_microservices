@@ -16,10 +16,9 @@ $container[\Domain\Contracts\Repositories\BooksRepositoryInterface::class] = fun
     return new Infrastructure\Persistence\PDO\Repositories\BooksRepository($em);
 };
 
-//SERVICES
-$container[\Domain\Contracts\Services\BooksServiceInterface::class] = function($container) {
-    $repositoryContract = $container->get(\Domain\Contracts\Repositories\BooksRepositoryInterface::class);
-    return new Domain\Services\BooksService($repositoryContract);
+$container[\Domain\Contracts\Repositories\EmpresasRepositoryInterface::class] = function($container) {
+    $em = $container->get('em');
+    return new Infrastructure\Persistence\PDO\Repositories\EmpresasRepository($em);
 };
 
 return $container;

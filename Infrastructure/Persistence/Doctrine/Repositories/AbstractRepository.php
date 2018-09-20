@@ -6,8 +6,10 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Domain\Contracts\Repositories\BaseRepositoryInterface;
 use Domain\Contracts\Entities\EntityInterface;
+use Infrastructure\Container\Helpers\StringHelper;
 
-abstract class AbstractRepository extends EntityRepository implements BaseRepositoryInterface {
+abstract class AbstractRepository extends EntityRepository implements BaseRepositoryInterface
+{
 
     /** @var string */
     protected $alias;
@@ -25,21 +27,22 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
 
     /**
      * Ordenação padrão de consultas.
-     * 
+     *
      * @var array
      */
     protected $defaultSort = [];
 
     /**
      * Query Builder
-     * 
+     *
      * @return QueryBuilder
      */
-    protected function queryBuilder(): QueryBuilder {
+    protected function queryBuilder(): QueryBuilder
+    {
         $this->lastQuery = $this->_em->createQueryBuilder()
-                ->select($this->getAlias())
-                ->from($this->_entityName, $this->getAlias());
-        
+            ->select($this->getAlias())
+            ->from($this->_entityName, $this->getAlias());
+
         $this->parseCriteria($this->defaultCriteria, $this->lastQuery);
         $this->parseOrderBy($this->defaultSort, $this->lastQuery);
 
@@ -54,30 +57,32 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
      * @return int|null
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function countLastQuery() {
+    public function countLastQuery()
+    {
         if (!$this->lastQuery ||
-                !($this->lastQuery instanceof QueryBuilder)
+            !($this->lastQuery instanceof QueryBuilder)
         ) {
             return null;
         }
 
-        return (int) $this->lastQuery
-                        ->select(sprintf('COUNT(%s) total', $this->getAlias()))
-                        ->resetDQLPart('groupBy')
-                        ->resetDQLPart('orderBy')
-                        ->setFirstResult(null)
-                        ->setMaxResults(null)
-                        ->getQuery()
-                        ->getSingleScalarResult();
+        return (int)$this->lastQuery
+            ->select(sprintf('COUNT(%s) total', $this->getAlias()))
+            ->resetDQLPart('groupBy')
+            ->resetDQLPart('orderBy')
+            ->setFirstResult(null)
+            ->setMaxResults(null)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     /**
      * Parse Criteria
-     * 
+     *
      * @param array $criteria
      * @param QueryBuilder $queryBuilder
      */
-    protected function parseCriteria(array $criteria, QueryBuilder $queryBuilder) {
+    protected function parseCriteria(array $criteria, QueryBuilder $queryBuilder)
+    {
         foreach ($criteria as $field => $value) {
             $condition = null;
             $fieldName = $this->getFieldWithAlias($field);
@@ -87,9 +92,9 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
                 foreach ($value as $_searchField => $_searchValue) {
                     $_searchField = $this->getFieldWithAlias($_searchField);
                     $condition = $queryBuilder->expr()->like(
-                            $_searchField, $queryBuilder->expr()->literal($_searchValue)
+                        $_searchField, $queryBuilder->expr()->literal($_searchValue)
                     );
-                    array_push($likes, (string) $condition);
+                    array_push($likes, (string)$condition);
                 }
                 $queryBuilder->andWhere(implode(' OR ', $likes));
                 continue;
@@ -99,7 +104,7 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
                 foreach ($value as $_searchField => $_searchValue) {
                     $_searchField = $this->getFieldWithAlias($_searchField);
                     $condition = $queryBuilder->expr()->neq(
-                            $_searchField, $queryBuilder->expr()->literal($_searchValue)
+                        $_searchField, $queryBuilder->expr()->literal($_searchValue)
                     );
                     $queryBuilder->andWhere($condition);
                 }
@@ -111,7 +116,7 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
                     $_searchField = $this->getFieldWithAlias($_searchField);
                     list($_valueIni, $_valueEnd) = $_searchValue;
                     $condition = $queryBuilder->expr()->between(
-                            sprintf('DATE(%s)', $_searchField), (string) $queryBuilder->expr()->literal($_valueIni), (string) $queryBuilder->expr()->literal($_valueEnd)
+                        sprintf('DATE(%s)', $_searchField), (string)$queryBuilder->expr()->literal($_valueIni), (string)$queryBuilder->expr()->literal($_valueEnd)
                     );
                     $queryBuilder->andWhere($condition);
                 }
@@ -121,7 +126,7 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
             switch (gettype($value)) {
                 case 'array':
                     $condition = $queryBuilder->expr()->in(
-                            $fieldName, $value
+                        $fieldName, $value
                     );
                     break;
                 case 'NULL':
@@ -134,7 +139,7 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
                     }
 
                     $condition = $queryBuilder->expr()->eq(
-                            $fieldName, $queryBuilder->expr()->literal($value)
+                        $fieldName, $queryBuilder->expr()->literal($value)
                     );
                     break;
                 default:
@@ -162,7 +167,8 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
      * @param QueryBuilder $queryBuilder
      * @return type
      */
-    protected function parseOrderBy(array $orderby = null, QueryBuilder $queryBuilder) {
+    protected function parseOrderBy(array $orderby = null, QueryBuilder $queryBuilder)
+    {
         if (!$orderby) {
             return;
         }
@@ -179,9 +185,10 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
      * @param $field
      * @return string
      */
-    protected function getFieldWithAlias($field) {
+    protected function getFieldWithAlias($field, $literalField = false)
+    {
         if (strpos($field, '.') === false) {
-            return sprintf('%s.%s', $this->getAlias(), $field);
+            return sprintf('%s.%s', $this->getAlias(), ($literalField ? $field : StringHelper::toCamelCase($field)));
         }
         return $field;
     }
@@ -189,7 +196,8 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
     /**
      * @inheritdoc
      */
-    public function createQueryBuilder($alias, $indexBy = null) {
+    public function createQueryBuilder($alias, $indexBy = null)
+    {
         $this->alias = $alias;
         return $this->queryBuilder();
     }
@@ -197,7 +205,8 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
     /**
      * @inheritdoc
      */
-    public function find($id, $lockMode = null, $lockVersion = null) {
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
         $queryBuilder = $this->queryBuilder();
         $queryBuilder->andWhere($this->getAlias() . '.id = :id');
         $queryBuilder->setParameter('id', $id);
@@ -207,24 +216,17 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
     /**
      * @inheritdoc
      */
-    public function findAll() {
-        $conn = $this->getEntityManager()
-            ->getConnection();
-        
+    public function findAll()
+    {
         $queryBuilder = $this->queryBuilder();
-        
-        $stmt = $conn->prepare($queryBuilder->getQuery()->getSQL());
-        $stmt->execute();
-
-        return $stmt->fetchAll();
-
-        //return $queryBuilder->getQuery()->getArrayResult();
+        return $queryBuilder->getQuery()->getArrayResult();
     }
 
     /**
      * @inheritdoc
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null) {
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    {
         $queryBuilder = $this->queryBuilder();
         $this->parseCriteria($criteria, $queryBuilder);
         $this->parseOrderby($orderBy, $queryBuilder);
@@ -237,13 +239,14 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
             $queryBuilder->setFirstResult($offset);
         }
 
-        return $queryBuilder->getQuery()->getResult();
+        return $queryBuilder->getQuery()->getArrayResult();
     }
 
     /**
      * @inheritdoc
      */
-    public function findOneBy(array $criteria, array $orderBy = null) {
+    public function findOneBy(array $criteria, array $orderBy = null)
+    {
         $result = $this->findBy($criteria, $orderBy, 1);
 
         if (!$result) {
@@ -261,14 +264,16 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
     /**
      * @inheritdoc
      */
-    public function transactional(\Closure $handler) {
+    public function transactional(\Closure $handler)
+    {
         $this->_em->transactional($handler);
     }
 
     /**
      * @inheritdoc
      */
-    public function getList(array $criteria, array $sort = [], int $limit = 10, int $offset = 0): array {
+    public function getList(array $criteria, array $sort = [], int $limit = 10, int $offset = 0): array
+    {
         $qb = $this->createQueryBuilder($this->getAlias());
 
         foreach ($criteria as $key => $value) {
@@ -289,7 +294,8 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
     /**
      * @inheritdoc
      */
-    public function count(array $criteria): int {
+    public function count(array $criteria): int
+    {
         $qb = $this->createQueryBuilder($this->getAlias());
         $qb->select('COUNT(1)');
 
@@ -298,9 +304,9 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
             $qb->setParameter($key, $value);
         }
 
-        return (int) $qb->getQuery()->getSingleScalarResult();
+        return (int)$qb->getQuery()->getSingleScalarResult();
     }
-    
+
     public function save(EntityInterface $entity)
     {
         $this->getEntityManager()->persist($entity);
@@ -311,12 +317,13 @@ abstract class AbstractRepository extends EntityRepository implements BaseReposi
     /**
      * @inheritdoc
      */
-    public function delete($id, $lockMode = null, $lockVersion = null) {
+    public function delete($id, $lockMode = null, $lockVersion = null)
+    {
         $entity = $this->find($id, $lockMode = null, $lockVersion = null);
         $this->getEntityManager()->remove($entity);
         $this->getEntityManager()->flush();
-        
-        return ($entity)? true : false;
+
+        return ($entity) ? true : false;
     }
 
     /**

@@ -4,6 +4,23 @@
     "filter":{
       "type":"object",
       "properties":{
+        "_isNot" : {
+          "id":{
+            "type":"string"
+          },
+          "cnpj":{
+            "type":"string"
+          },
+          "ie":{
+            "type":"string"
+          },
+          "im":{
+            "type":"string"
+          },
+          "cnae":{
+            "type":"string"
+          }
+        },
         "_search":{
           "razao_social":{
             "type":"string"
@@ -20,6 +37,9 @@
           "responsavel":{
             "type":"string"
           }
+        },
+        "nome_fantasia":{
+          "type":"string"
         },
         "cnpj":{
           "type":"string"
@@ -46,7 +66,16 @@
     "order":{
       "type":"object",
       "properties":{
-        "name":{
+        "razao_social":{
+          "type":"string"
+        },
+        "nome_fantasia":{
+          "type":"string"
+        },
+        "id":{
+          "type":"string"
+        },
+        "cnpj":{
           "type":"string"
         }
       },

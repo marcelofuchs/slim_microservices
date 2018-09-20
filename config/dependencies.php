@@ -1,6 +1,6 @@
 <?php
-require_once 'dependencies.doctrine.php';
-//require_once 'dependencies.pdo.php';
+//require_once 'dependencies.doctrine.php';
+require_once 'dependencies.pdo.php';
 //require_once 'dependencies.redbean.php';
 
 // DATABASE DEFAULT PRELOAD
@@ -13,6 +13,11 @@ $container['em'] = function ($container) {
 $container[\Domain\Contracts\Services\BooksServiceInterface::class] = function($container) {
     $repositoryContract = $container->get(\Domain\Contracts\Repositories\BooksRepositoryInterface::class);
     return new Domain\Services\BooksService($repositoryContract);
+};
+
+$container[\Domain\Contracts\Services\ModuloServiceInterface::class] = function($container) {
+    $repositoryContract = $container->get(\Domain\Contracts\Repositories\ModuloRepositoryInterface::class);
+    return new Domain\Services\ModuloService($repositoryContract);
 };
 
 $container[\Domain\Contracts\Services\EmpresasServiceInterface::class] = function($container) {

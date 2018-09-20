@@ -3,11 +3,11 @@
 namespace Infrastructure\Container\Helpers;
 
 /**
- * Class Cnpj
+ * Class CnpjHelper
  *
  * @package Infrastructure\Container\Helpers
  */
-class Cnpj
+class CnpjHelper
 {
     /**
      * @param $cnpj

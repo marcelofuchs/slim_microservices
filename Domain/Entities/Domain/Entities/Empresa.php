@@ -10,7 +10,7 @@ class Empresa
     /**
      * @var string
      */
-    public $id;
+    private $id;
 
     /**
      * @var string

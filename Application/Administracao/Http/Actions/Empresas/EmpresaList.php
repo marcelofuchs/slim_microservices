@@ -23,15 +23,18 @@ class EmpresaList extends AbstractAction
     public function process(Request $request, Response $response, $args = [])
     {
         $queryString = json_decode($request->getQueryParam('q'), true);
-        print_r($queryString);exit;
+
+        $limit = intval($queryString['paginate']['limit']) ?? 1000;
+        $offset = intval($queryString['paginate']['offset']);
 
         /** @var EmpresasServiceInterface $empresasService */
         $empresasService = $this->container->get(EmpresasServiceInterface::class);
         $empresas = $empresasService->findBy(
-            $queryString['filters'],
-            $queryString['order'] ?? null,
-            $queryString[   '']
-            );
+            $queryString['filter'] ?? [],
+            $queryString['order'] ?? [],
+            ($limit > 1000 ? 1000 : $limit),
+            $offset
+        );
         return $response->withJson($empresas, 200)->withHeader('Content-type', 'application/json');
     }
 }

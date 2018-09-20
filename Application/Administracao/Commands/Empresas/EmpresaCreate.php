@@ -3,7 +3,7 @@
 namespace Application\Administracao\Commands\Empresas;
 
 use Application\Administracao\Contracts\Commands\Empresas\EmpresaCreateInterface;
-use Infrastructure\Container\Helpers\Cnpj;
+use Infrastructure\Container\Helpers\CnpjHelper;
 use Infrastructure\Container\ServiceBus\Command\CommandInterface;
 use Webmozart\Assert\Assert;
 
@@ -116,7 +116,7 @@ class EmpresaCreate implements EmpresaCreateInterface
      */
     public static function fromArray(array $data)
     {
-        Assert::true(Cnpj::validate($data['cnpj']) , 'Invalid CNPJ.');
+        Assert::true(CnpjHelper::validate($data['cnpj']) , 'Invalid CNPJ.');
 
         return new self(
             $data['id'],
