@@ -2,16 +2,15 @@
 
 namespace Infrastructure\Container\Middleware;
 
-use League\JsonGuard\Validator;
-use Psr7Middlewares\Middleware;
 use Slim\Http\Request;
+use Opis\JsonSchema\{Validator, ValidationResult, ValidationError, Schema};
 
 /**
  * Class JsonGuardMiddleware
  *
  * @package Infrastructure\Container\Middleware
  */
-class JsonGuardMiddleware extends Middleware
+class JsonGuardMiddleware
 {
 
     /**
@@ -22,7 +21,7 @@ class JsonGuardMiddleware extends Middleware
     /**
      * @var
      */
-    protected $validatorResult;
+    protected $validatorResult = ['error' => null];
 
     /**
      * JsonGuardMiddleware constructor.
@@ -89,25 +88,29 @@ class JsonGuardMiddleware extends Middleware
 
         $decode = json_decode($json, false);
         if (!$decode) {
-            $this->validatorResult[] = "Invalid Json: " . json_last_error_msg();
+            $this->validatorResult['error'] = "Invalid Json: " . json_last_error_msg();
             return false;
         }
 
-        $decodeShema = json_decode(file_get_contents($schema), false);
+        $decodeShema = Schema::fromJsonString(file_get_contents($schema));
         if (!$decodeShema) {
-            $this->validatorResult[] = "Invalid Shema Json: " . json_last_error_msg();
+            $this->validatorResult['error'] = "Invalid Shema Json: " . json_last_error_msg();
             return false;
         }
 
-        $validator = new Validator($decode, $decodeShema);
-        if ($validator->passes()) {
+        $validator = new Validator();
+        $result = $validator->schemaValidation($decode, $decodeShema);
+        if ($result->isValid()) {
             return true;
         }
 
-        foreach ($validator->errors() as $error) {
-            $errors[] = "The field: " . $error->getDataPath() . " has an error with message: " . $error->getMessage();
-        }
-        $this->validatorResult = $errors;
+        /** @var ValidationError $error */
+        $error = $result->getFirstError();
+
+        $this->validatorResult['error'] = "Error: " . $error->keyword() . " " .
+            json_encode($error->keywordArgs(), JSON_PRETTY_PRINT) .
+            " Field " . implode(",", $error->dataPointer());
+
         return false;
     }
 }
