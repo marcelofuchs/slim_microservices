@@ -30,46 +30,46 @@ Cada aplicação deve ser totalmente independente, ao subir uma aplicação de B
 ### Gerador de CRUD
 EM BREVE
 
-### Composer.
+### Composer
 
 ```
 # ./micro.sh composer --help
 ```
 
-### Doctrine.
+### Doctrine
 
 ```
 # ./micro.sh doctrine --help
 ```
-#### Gerar arquivo YAML a partir do banco de dados.
+#### Gerar arquivo YAML a partir do banco de dados
 * Use `--filter=Book --force` caso queira apenas uma tabela.
 
 ```
 # ./micro.sh doctrine orm:convert-mapping --from-database yaml ./Infrastructure/Persistence/Doctrine/Mappings --namespace=Domain\\\\Entities\\\\
 ```
 
-#### Gerar Entidade a partir do arquivo Yaml.
+#### Gerar Entidade a partir do arquivo Yaml
 * Use `--filter=Book` caso queira apenas uma entidade.
 
 ```
 # ./micro.sh doctrine orm:generate-entities .
 ```
 
-#### Gera script de atualização do banco de dados.
+#### Gerar script de atualização do banco de dados
 Gera um script sql para atualização de banco de dados a partir das alterações feitas no arquivo YAML.
 
 ```
 # ./micro.sh doctrine orm:schema-tool:update --dump-sql
 ```
 
-#### Atualiza banco de dados.
+#### Atualiza banco de dados
 Este comando deve ser utilizado com cuidado pois atualiza diretamente o banco de dados de acordo com alterações no arquivo YAML.
 
 ```
 # ./micro.sh doctrine orm:schema-tool:update --force
 ```
 
-### Docker.
+### Docker
 
 ```
 # ./micro.sh
