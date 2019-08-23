@@ -62,7 +62,7 @@ Gera um script sql para atualização de banco de dados a partir das alteraçõe
 # ./micro.sh doctrine orm:schema-tool:update --dump-sql
 ```
 #### Validar entidades geradas
-* use '--skip-sync' para ignorar a conexão com banco de dados.
+* use `--skip-sync` para ignorar a conexão com banco de dados.
 
 ```
 # ./micro.sh doctrine orm:validate-schema --skip-sync
