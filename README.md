@@ -46,7 +46,7 @@ Cada aplicação deve ser totalmente independente, ao subir uma aplicação de B
 # ./micro.sh
 ```
  
-- Gerar arquivo Yaml a partir do banco de dados. use * --filter=Book --force * caso queira apenas uma tabela.
+- Gerar arquivo Yaml a partir do banco de dados. use `--filter=Book --force` caso queira apenas uma tabela.
 
 ```
 # ./micro.sh doctrine orm:convert-mapping --from-database yaml ./Infrastructure/Persistence/Doctrine/Mappings --namespace=Domain\\\\Entities\\\\
