@@ -52,7 +52,7 @@ Cada aplicação deve ser totalmente independente, ao subir uma aplicação de B
 # ./micro.sh doctrine orm:convert-mapping --from-database yaml ./Infrastructure/Persistence/Doctrine/Mappings --namespace=Domain\\\\Entities\\\\
 ```
 
-- Gerar Entidade a partir do arquivo Yaml
+- Gerar Entidade a partir do arquivo Yaml. Ex: use `--filter="Book"` para gerar somente a entidade Book.
 
 ```
 # ./micro.sh doctrine orm:generate-entities .
