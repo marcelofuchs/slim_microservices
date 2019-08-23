@@ -61,6 +61,13 @@ Gera um script sql para atualização de banco de dados a partir das alteraçõe
 ```
 # ./micro.sh doctrine orm:schema-tool:update --dump-sql
 ```
+#### Validar entidades geradas
+* use '--skip-sync' para ignorar a conexão com banco de dados.
+
+```
+# ./micro.sh doctrine orm:validate-schema --skip-sync
+```
+
 
 #### Atualiza banco de dados
 Este comando deve ser utilizado com cuidado pois atualiza diretamente o banco de dados de acordo com alterações no arquivo YAML.
