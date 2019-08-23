@@ -4,9 +4,7 @@ Api voltada a uma estrutura de microservices.
 
 Cada aplicação deve ser totalmente independente, ao subir uma aplicação de Books(exemplo), a aplicacao de autenticação nao deve ser afetada.
 
-
-
-## Dicas
+## Instalação
 
 É possivel executar comandos comuns através do script 'micro.sh'. O script vai acessar o bash de um determinado docker, evitando instalação de PHP/Banco de dados/Composer no sistema hospedeiro.
 
@@ -28,45 +26,52 @@ Cada aplicação deve ser totalmente independente, ao subir uma aplicação de B
 # ./micro.sh up
 ```
 
-- Para executar o comando composer.
+## Executar comandos.
+### Gerador de CRUD
+EM BREVE
+
+### Composer.
 
 ```
 # ./micro.sh composer --help
 ```
 
-- Para executar comandos do doctrine.
+### Doctrine.
 
 ```
 # ./micro.sh doctrine --help
 ```
-
-- Para executar comandos relacionados ao docker.
-
-```
-# ./micro.sh
-```
- 
-- Gerar arquivo Yaml a partir do banco de dados. use `--filter=Book --force` caso queira apenas uma tabela.
+#### Gerar arquivo YAML a partir do banco de dados.
+* Use `--filter=Book --force` caso queira apenas uma tabela.
 
 ```
 # ./micro.sh doctrine orm:convert-mapping --from-database yaml ./Infrastructure/Persistence/Doctrine/Mappings --namespace=Domain\\\\Entities\\\\
 ```
 
-- Gerar Entidade a partir do arquivo Yaml. Ex: use `--filter="Book"` para gerar somente a entidade Book.
+#### Gerar Entidade a partir do arquivo Yaml.
+* Use `--filter=Book` caso queira apenas uma entidade.
 
 ```
 # ./micro.sh doctrine orm:generate-entities .
 ```
 
+#### Gera script de atualização do banco de dados.
+Gera um script sql para atualização de banco de dados a partir das alterações feitas no arquivo YAML.
 
-- Atualiza banco de dados.
+```
+# ./micro.sh doctrine orm:schema-tool:update --dump-sql
+```
+
+#### Atualiza banco de dados.
+Este comando deve ser utilizado com cuidado pois atualiza diretamente o banco de dados de acordo com alterações no arquivo YAML.
 
 ```
 # ./micro.sh doctrine orm:schema-tool:update --force
 ```
 
--  Gera script de atualização do banco de dados.
+### Docker.
 
 ```
-# ./micro.sh doctrine orm:schema-tool:update --dump-sql
+# ./micro.sh
 ```
+ 
